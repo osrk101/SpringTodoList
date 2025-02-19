@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="spring.todolist.repository.TodoMapper">
+
+  <!-- 姓名リスト取得 -->
+  <select id="getAllTodo" resultType="spring.todolist.domain.user.model.Todo">
+    SELECT * FROM todo_items ";
+  </select>
+
+</mapper>
+  

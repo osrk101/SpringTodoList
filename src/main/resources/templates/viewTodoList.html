@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS読込 -->
+<link
+    rel="stylesheet"
+    th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- JS読込 -->
+<script
+    th:src="@{/webjars/jquery/jquery.min.js}"
+    defer></script>
+<script
+    th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+    defer></script>
+<title>profile</title>
+</head>
+
+<body class="bg-light">
+    <div class="container text-center">
+        <div
+            class="mx-auto"
+            style="width: 500px;">
+            <h2 class="text-center mb-4">作業一覧</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">項目名</th>
+                        <th scope="col">担当者</th>
+                        <th scope="col">登録日</th>
+                        <th scope="col">期限日</th>
+                        <th scope="col">完了日</th>
+                        <th scope="col">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr th:each="todo:${todoList}">
+                        <td th:text="*{itemName}"></td>
+                        <td th:text="*{lastName}" + "*{firstName}"></td>
+                        <td th:text="*{user.team}"></td>
+                        <td>
+                            <form
+                                th:action="@{/user/delete}"
+                                method="post">
+                                <input
+                                    type="hidden"
+                                    name="id"
+                                    th:value="*{user.id}">
+                                <input
+                                    type="submit"
+                                    value="削除"
+                                    class="btn btn-danger btn-sm" />
+                           </form>
+                        </td>
+                    </tr>
+                    -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</html>

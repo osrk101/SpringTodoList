@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS読込 -->
+<link
+    rel="stylesheet"
+    th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- JS読込 -->
+<script
+    th:src="@{/webjars/jquery/jquery.min.js}"
+    defer></script>
+<script
+    th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+    defer></script>
+<title>input</title>
+</head>
+<body class="bg-light">
+    <div class="container text-center">
+        <div
+            class="mx-auto"
+            style="width: 500px;">
+            <form
+                method="post"
+                action="login"
+                class="form-input"
+                th:object="${userForm}">
+                <!-- 名前 -->
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">項目</th>
+                            <th scope="col">ユーザー情報</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">ユーザー名</th>
+                            <td>
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="ユーザー名を入力"
+                                    th:field="*{name}"
+                                    th:errorClass="is-invalid" />
+                                <div
+                                    class="invalid-feedback"
+                                    th:errors="*{name}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">パスワード</th>
+                            <td>
+                                <input
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="パスワードを入力"
+                                    th:field="*{pass}"
+                                    th:errorClass="is-invalid" />
+                                <div
+                                    class="invalid-feedback"
+                                    th:errors="*{pass}"></div>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                </table>
+                <!-- 送信ボタン -->
+                <input
+                    type="submit"
+                    value="送信"
+                    class="btn btn-primary w-100 mt-3" />
+            </form>
+        </div>
+    </div>
+</body>
+</html>
