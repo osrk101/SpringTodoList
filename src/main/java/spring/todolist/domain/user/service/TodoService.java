@@ -11,7 +11,7 @@ public interface TodoService {
 	public List<Todo> getAllTodo();
 
 	/** Todo検索 */
-	public List<Todo> getSearchTodoList();
+	public List<Todo> getSearchTodoList(String seachWords);
 
 	/** Todo登録 */
 	public void addTodo(TodoForm todoForm);

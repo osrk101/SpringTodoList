@@ -11,5 +11,10 @@
     LEFT JOIN users ON users.id = todo_items.user_id;
   </select>
 
+ <!--  Todo検索 -->
+   <select id="getSearchTodo" resultType="spring.todolist.domain.user.model.Todo">
+   
+  </select>
+
 </mapper>
   

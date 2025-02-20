@@ -12,4 +12,6 @@ public interface TodoMapper {
 	/** Todoリスト全取得 */
 	List<Todo> getAllTodo();
 
+	/** Todo検索 */
+	List<Todo> getSearchTodo();
 }

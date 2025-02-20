@@ -26,7 +26,8 @@ public class TodoServiceImpl implements TodoService {
 
 	/** Todo検索 */
 	@Override
-	public List<Todo> getSearchTodoList() {
+	public List<Todo> getSearchTodoList(String seachWords) {
+		List<Todo> seachTodoList = 
 		return null;
 
 	}
