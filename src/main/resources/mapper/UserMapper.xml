@@ -6,14 +6,13 @@
 <mapper namespace="spring.todolist.repository.UserMapper">
 
   <!-- ログイン確認 -->
-  <select id="verifyLogin;" resultType="spring.todolist.domain.user.model.User">
-    SELECT family_name, first_name FROM users WHERE user = ? AND pass = ? AND is_deleted = 0 LIMIT 1
-    #{userName},#{pass};
+  <select id="verifyLogin" resultType="spring.todolist.domain.user.model.User">
+    SELECT * FROM users WHERE user = #{userName} AND pass = #{pass} AND is_deleted = 0 LIMIT 1;
   </select>
 
   <!-- 姓名リスト取得 -->
   <select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.User">
-    SELECT id , family_name , first_name FROM users ";
+    SELECT id , family_name , first_name FROM users;
   </select>
 
 </mapper>

@@ -17,7 +17,7 @@
 <script
     th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
     defer></script>
-<title>profile</title>
+<title>作業リスト</title>
 </head>
 
 <body class="bg-light">
@@ -26,7 +26,8 @@
             class="mx-auto"
             style="width: 500px;">
             <h2 class="text-center mb-4">作業一覧</h2>
-            <table class="table">
+            <p th:text=|${loginUser.familyName}${loginUser.firstName}|>
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th scope="col">項目名</th>
@@ -38,26 +39,27 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr th:each="todo:${todoList}">
-                        <td th:text="*{itemName}"></td>
-                        <td th:text="*{lastName}" + "*{firstName}"></td>
-                        <td th:text="*{user.team}"></td>
+                    <tr th:each="todo:${todoList}">
+                        <td th:text="${todo.itemName}"></td>
+                        <td th:text="|${todo.familyName}${todo.firstName}|"></td>
+                        <td >登録日</td>
+                        <td>期限日</td>
+                        <td>完了日</td>
                         <td>
                             <form
-                                th:action="@{/user/delete}"
+                                th:action="@{/delete}"
                                 method="post">
                                 <input
                                     type="hidden"
                                     name="id"
-                                    th:value="*{user.id}">
+                                    th:value="${todo.id}">
                                 <input
                                     type="submit"
                                     value="削除"
                                     class="btn btn-danger btn-sm" />
-                           </form>
+                            </form>
                         </td>
                     </tr>
-                    -->
                 </tbody>
             </table>
         </div>

@@ -11,7 +11,7 @@ public class Todo {
 
 	private int userId;
 
-	private String lastName;
+	private String familyName;
 
 	private String firstName;
 

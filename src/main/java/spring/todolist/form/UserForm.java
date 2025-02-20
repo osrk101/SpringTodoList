@@ -11,7 +11,7 @@ public class UserForm {
 	private int id;
 
 	@NotBlank
-	private String name;
+	private String userName;
 
 	@NotBlank
 	private String pass;

@@ -1,27 +1,30 @@
 package spring.todolist.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
+import jakarta.servlet.http.HttpSession;
+import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.model.User;
 import spring.todolist.domain.user.service.TodoService;
-import spring.todolist.domain.user.service.UserService;
 
 @Controller
 public class TodoController {
 
 	@Autowired
-	UserService userService;
-
-	@Autowired
 	TodoService todoService;
 
-	@GetMapping("/ViewTodoList")
-	public String getTodoList(@ModelAttribute User loginUser, Model model) {
-
-		return "ViewTodoList";
+	@GetMapping("/viewTodoList")
+	public String getTodoList(HttpSession session, Model model) {
+		List<Todo> todoList = todoService.getAllTodo();
+		model.addAttribute("todoList", todoList);
+		User loginUser = (User) session.getAttribute("loginUser");
+		System.out.println("セッションから取得した loginUser: " + loginUser);
+		model.addAttribute("loginUser", loginUser);
+		return "viewTodoList";
 	}
 }

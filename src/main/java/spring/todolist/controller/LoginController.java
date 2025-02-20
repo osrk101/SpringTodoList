@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import spring.todolist.domain.user.model.User;
 import spring.todolist.domain.user.service.UserService;
@@ -18,20 +19,24 @@ public class LoginController {
 	@Autowired
 	UserService userService;
 
-	@GetMapping("/login")
-	public String getLogin(@ModelAttribute UserForm userForm, Model model) {
-		return "login";
+	@GetMapping("/index")
+	public String getIndex(@ModelAttribute UserForm userForm, Model model) {
+		return "index";
 	}
 
-	@PostMapping("/login")
-	public String PostLogin(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, Model model) {
+	@PostMapping("/index")
+	public String PostIndex(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
 
 		if (bindingResult.hasErrors())
-			return getLogin(userForm, model);
+			return getIndex(userForm, model);
 
 		User loginUser = userService.verifyLogin(userForm);
-		
-		model.addAttribute("loginUser", loginUser);
-		return "login";
+		if (loginUser == null) {
+			model.addAttribute("loginError", "ユーザー名またはパスワードが間違っています");
+			return getIndex(userForm, model);
+		}
+		session.setAttribute("loginUser", loginUser);
+		System.out.println("セッションに保存: " + session.getAttribute("loginUser"));
+		return "redirect:/viewTodoList";
 	}
 }

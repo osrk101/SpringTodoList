@@ -7,7 +7,7 @@ public class User {
 
 	private int id;
 
-	private String userNname;
+	private String userName;
 
 	private Integer pass;
 

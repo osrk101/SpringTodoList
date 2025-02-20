@@ -5,9 +5,10 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="spring.todolist.repository.TodoMapper">
 
-  <!-- 姓名リスト取得 -->
+  <!-- Todoリスト全取得 -->
   <select id="getAllTodo" resultType="spring.todolist.domain.user.model.Todo">
-    SELECT * FROM todo_items ";
+    SELECT * FROM todo_items 
+    LEFT JOIN users ON users.id = todo_items.user_id;
   </select>
 
 </mapper>
