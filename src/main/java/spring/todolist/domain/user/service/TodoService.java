@@ -11,10 +11,10 @@ public interface TodoService {
 	public List<Todo> getAllTodo();
 
 	/** Todo検索 */
-	public List<Todo> getSearchTodoList(String seachWords);
+	public List<Todo> getSearchTodo(String searchWords);
 
 	/** Todo登録 */
-	public void addTodo(TodoForm todoForm);
+	public boolean addTodo(TodoForm todoForm);
 
 	/** Todo更新 */
 	public void updateTodo(TodoForm todoForm);

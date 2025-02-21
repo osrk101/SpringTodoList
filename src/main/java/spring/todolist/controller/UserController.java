@@ -15,9 +15,14 @@ import spring.todolist.domain.user.service.UserService;
 import spring.todolist.form.UserForm;
 
 @Controller
-public class LoginController {
+public class UserController {
 	@Autowired
 	UserService userService;
+
+	@ModelAttribute("userForm")
+	public UserForm setupUserForm() {
+		return new UserForm();
+	}
 
 	@GetMapping("/index")
 	public String getIndex(@ModelAttribute UserForm userForm, Model model) {
@@ -25,7 +30,8 @@ public class LoginController {
 	}
 
 	@PostMapping("/index")
-	public String PostIndex(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession session, Model model) {
+	public String PostIndex(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession session,
+			Model model) {
 
 		if (bindingResult.hasErrors())
 			return getIndex(userForm, model);

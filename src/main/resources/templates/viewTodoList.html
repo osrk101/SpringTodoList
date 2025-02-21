@@ -21,10 +21,26 @@
 </head>
 
 <body class="bg-light">
+	<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+		<span class="navbar-brand">TODOリスト</span>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item"><a class="nav-link" th:href="@{/viewTodoList}">作業一覧</a></li>
+				<li class="nav-item active"><a class="nav-link" th:href="@{/addTodo}">作業登録</a></li>
+			</ul>
+			<span class="navbar-text text-light" th:text="|${loginUser.familyName} ${loginUser.firstName}|">
+			</span>
+			<form action="Logout" method="get" class="form-inline ml-2">
+				<button class="btn btn-outline-light">ログアウト</button>
+			</form>
+		</div>
+	</nav>
     <div class="container text-center">
         <div class="mx-auto">
             <h2 class="text-center mb-4">作業一覧</h2>
-            <p th:text="|${loginUser.familyName} ${loginUser.firstName}|"></p>
             <form
                 th:action="@{/viewTodoList}"
                 method="post">

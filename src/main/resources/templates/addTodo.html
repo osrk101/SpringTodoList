@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta
+	name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- CSS読込 -->
+<link
+	rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<!-- JS読込 -->
+<script
+	th:src="@{/webjars/jquery/jquery.min.js}"
+	defer></script>
+<script
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+	defer></script>
+<title>作業登録</title>
+</head>
+<body class="bg-light">
+
+	<div class="container text-center">
+		<div
+			class="mx-auto"
+			style="width: 500px;">
+			<form
+				method="post"
+				action="add"
+				class="form-input">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">項目</th>
+							<th scope="col">作業情報</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"></th>
+							<td><select
+									name="assignee"
+									id="assignee"
+									class="form-control"
+									th:field="${todoForm.userId}"
+									th:errorClass=" is-invalid">
+									<option value="">担当者を選択</option>
+									<option
+										th:each="user : ${assigneeList}"
+										th:value="${user.Id}"
+										th:text="|${user.familyName} ${user.firstName}|"></option>
+								</select>
+						</tr>
+					</tbody>
+				</table>
+				<!-- 登録ボタン -->
+				<input
+					type="submit"
+					value="送信"
+					class="btn btn-primary w-100 mt-3" />
+			</form>
+		</div>
+	</div>
+</body>
+</html>

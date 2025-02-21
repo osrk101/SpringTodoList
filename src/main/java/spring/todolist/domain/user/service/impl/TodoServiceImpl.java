@@ -26,16 +26,14 @@ public class TodoServiceImpl implements TodoService {
 
 	/** Todo検索 */
 	@Override
-	public List<Todo> getSearchTodoList(String seachWords) {
-		List<Todo> seachTodoList = 
-		return null;
-
+	public List<Todo> getSearchTodo(String searchWords) {
+		return todoMapper.getSearchTodo(searchWords);
 	}
 
-	/** Todo登録 */
+	/** Todo登録  */
 	@Override
-	public void addTodo(TodoForm todoForm) {
-
+	public boolean addTodo(TodoForm todoForm) {
+		return todoMapper.addTodo(todoForm);
 	}
 
 	/** Todo更新 */

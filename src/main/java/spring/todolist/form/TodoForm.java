@@ -10,13 +10,13 @@ import lombok.Data;
 public class TodoForm {
 
 	@NotNull
-	private int id;
+	private Integer id;
 	
 	@NotNull
-	private int userId;
+	private Integer userId;
 	
 	@NotBlank
-	private String LastName;
+	private String familyName;
 	
 	@NotBlank
 	private String firstName;
