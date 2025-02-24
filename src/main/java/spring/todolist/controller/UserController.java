@@ -25,7 +25,9 @@ public class UserController {
 	}
 
 	@GetMapping("/index")
-	public String getIndex(@ModelAttribute UserForm userForm, Model model) {
+	public String getIndex(@ModelAttribute UserForm userForm,Model model) {
+		model.addAttribute("userForm", userForm);
+		
 		return "index";
 	}
 
@@ -42,7 +44,6 @@ public class UserController {
 			return getIndex(userForm, model);
 		}
 		session.setAttribute("loginUser", loginUser);
-		System.out.println("セッションに保存: " + session.getAttribute("loginUser"));
 		return "redirect:/viewTodoList";
 	}
 }

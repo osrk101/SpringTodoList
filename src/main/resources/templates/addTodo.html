@@ -19,47 +19,98 @@
 	defer></script>
 <title>作業登録</title>
 </head>
-<body class="bg-light">
+<!-- ナビゲーションバー -->
+<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+	<span class="navbar-brand">TODOリスト</span>
+	<button
+		class="navbar-toggler"
+		type="button"
+		data-toggle="collapse"
+		data-target="#navbarNav"
+		aria-controls="navbarNav"
+		aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div
+		class="collapse navbar-collapse"
+		id="navbarNav">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item"><a
+				class="nav-link"
+				href="/viewTodoList">作業一覧</a></li>
+			<li class="nav-item active"><a
+				class="nav-link"
+				href="/addTodo">作業登録</a></li>
+		</ul>
+		<span
+			class="navbar-text text-light"
+			th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
+		<form
+			action="Logout"
+			method="get"
+			class="form-inline ml-2">
+			<button class="btn btn-outline-light">ログアウト</button>
+		</form>
+	</div>
+</nav>
+<!-- コンテンツエリア -->
+<body>
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-sm-12">
 
-	<div class="container text-center">
-		<div
-			class="mx-auto"
-			style="width: 500px;">
-			<form
-				method="post"
-				action="add"
-				class="form-input">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">項目</th>
-							<th scope="col">作業情報</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row"></th>
-							<td><select
-									name="assignee"
-									id="assignee"
-									class="form-control"
-									th:field="${todoForm.userId}"
-									th:errorClass=" is-invalid">
-									<option value="">担当者を選択</option>
-									<option
-										th:each="user : ${assigneeList}"
-										th:value="${user.Id}"
-										th:text="|${user.familyName} ${user.firstName}|"></option>
-								</select>
-						</tr>
-					</tbody>
-				</table>
-				<!-- 登録ボタン -->
-				<input
-					type="submit"
-					value="送信"
-					class="btn btn-primary w-100 mt-3" />
-			</form>
+				<form
+					action="/addTodo"
+					method="post"
+					th:object="${todoForm}">
+					<!-- 項目名 -->
+					<div class="form-group">
+						<label for="itemName">項目名</label>
+						<input
+							type="text"
+							class="form-control"
+							th:field="*{itemName}"
+							th:errorClass="is-invalid" />
+						<div
+							class="invalid-feedback"
+							th:errors="*{itemName}"></div>
+					</div>
+
+					<!-- 担当者 -->
+					<div class="form-group">
+						<label for="assignee">担当者</label>
+						<select
+							class="form-control"
+							th:field="*{userId}"
+							th:errorClass=" is-invalid">
+							<option value="">担当者を選択</option>
+							<option
+								th:each="user : ${assigneeList}"
+								th:value="${user.Id}"
+								th:text="|${user.familyName} ${user.firstName}|"></option>
+						</select>
+					</div>
+
+					<!-- 期限 -->
+					<div class="form-group">
+						<label for="expireDate">期限</label>
+						<input
+							type="date"
+							class="form-control"
+							th:field=*{expireDate}>
+					</div>
+
+					<!-- ボタン -->
+					<button
+						type="submit"
+						class="btn btn-primary">作業登録</button>
+					<button
+						type="button"
+						class="btn btn-outline-secondary"
+						onclick="history.back()">キャンセル</button>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>

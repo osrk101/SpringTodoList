@@ -18,8 +18,8 @@ public class TodoServiceImpl implements TodoService {
 	private TodoMapper todoMapper;
 
 	/** Todoリスト全取得 */
+
 	@Override
-	@Transactional
 	public List<Todo> getAllTodo() {
 		return todoMapper.getAllTodo();
 	}
@@ -31,18 +31,21 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	/** Todo登録  */
+	@Transactional
 	@Override
 	public boolean addTodo(TodoForm todoForm) {
 		return todoMapper.addTodo(todoForm);
 	}
 
 	/** Todo更新 */
+	@Transactional
 	@Override
 	public void updateTodo(TodoForm todoForm) {
 
 	}
 
 	/** Todo削除 */
+	@Transactional
 	@Override
 	public void deleteTodo(TodoForm todoForm) {
 
@@ -55,6 +58,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	/** Todo完了処理　*/
+	@Transactional
 	@Override
 	public void setFinishedDate() {
 

@@ -4,84 +4,93 @@
 <head>
 <meta charset="UTF-8">
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- CSS読込 -->
 <link
-    rel="stylesheet"
-    th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- JS読込 -->
 <script
-    th:src="@{/webjars/jquery/jquery.min.js}"
-    defer></script>
+	th:src="@{/webjars/jquery/jquery.min.js}"
+	defer></script>
 <script
-    th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
-    defer></script>
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+	defer></script>
 <title>ログイン</title>
 </head>
-<body class="bg-light">
-    <div class="container text-center">
-        <div
-            class="mx-auto"
-            style="width: 500px;">
-            <form
-                method="post"
-                action="index"
-                class="form-input"
-                th:object="${userForm}">
-                <!-- 名前 -->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">項目</th>
-                            <th scope="col">ユーザー情報</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">ユーザー名</th>
-                            <td>
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    placeholder="ユーザー名を入力"
-                                    th:field="*{userName}"
-                                    th:errorClass="is-invalid" />
-                                <div
-                                    class="invalid-feedback"
-                                    th:errors="*{userName}"></div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">パスワード</th>
-                            <td>
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    placeholder="パスワードを入力"
-                                    th:field="*{pass}"
-                                    th:errorClass="is-invalid" />
-                                <div
-                                    class="invalid-feedback"
-                                    th:errors="*{pass}"></div>
-                            </td>
-                        </tr>
+<body>
+	<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+		<span class="navbar-brand">TODOリスト</span>
+	</nav>
+	<div class="container text-center">
+		<!-- ログイン画面タイトル -->
+		<div class="row">
+			<div class="col text-center">
+				<h1>ログイン</h1>
+			</div>
+		</div>
 
-                    </tbody>
-                </table>
-                <div
-                    th:if="${loginError}"
-                    class="alert alert-danger">
-                    <p th:text="${loginError}"></p>
-                </div>
-
-                <!-- 送信ボタン -->
-                <input
-                    type="submit"
-                    value="送信"
-                    class="btn btn-primary w-100 mt-3" />
-            </form>
-        </div>
-    </div>
+		<!-- ログインフォーム -->
+		<div class="row mt-3">
+			<!-- 左側の余白 -->
+			<div class="col-sm-3"></div>
+			<!-- 中央のカラム -->
+			<div class="col-sm-6">
+				<form
+					action="index"
+					method="post"
+					class="form-input"
+					th:object="${userForm}">
+					<!-- ユーザー名 -->
+					<div class="form-group">
+						<label for="userName">ユーザー名</label>
+						<input
+							type="text"
+							class="form-control"
+							th:field="*{userName}"
+							th:errorClass="is-invalid"
+							placeholder="ユーザー名を入力">
+						<div
+							class="invalid-feedback"
+							th:errors="*{userName}"></div>
+					</div>
+					<!-- パスワード -->
+					<div class="form-group">
+						<label for="password">パスワード</label>
+						<input
+							type="password"
+							class="form-control"
+							th:field="*{pass}"
+							th:errorClass="is-invalid"
+							placeholder="パスワードを入力">
+						<div
+							class="invalid-feedback"
+							th:errors="*{pass}"></div>
+					</div>
+					<div
+						th:if="${loginError}"
+						class="alert alert-danger">
+						<p th:text="${loginError}"></p>
+					</div>
+					<!-- ログインボタン -->
+					<button
+						type="submit"
+						class="btn btn-primary btn-block">ログイン</button>
+				</form>
+			</div>
+			<!-- 右側の余白 -->
+			<div class="col-sm-3"></div>
+		</div>
+		<!-- エラーメッセージの表示 -->
+		<div class="row mt-3">
+			<!-- 左側の余白 -->
+			<div class="col-sm-3"></div>
+			<!-- 中央のカラム -->
+			<div class="col-sm-6"></div>
+			<!-- 右側の余白 -->
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
 </body>
 </html>

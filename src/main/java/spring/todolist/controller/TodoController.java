@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.model.User;
@@ -23,45 +22,44 @@ public class TodoController {
 
 	@Autowired
 	TodoService todoService;
-	
+
 	@Autowired
 	UserService userService;
 
 	/** TodoListを全取得してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
-	public String getTodoList(HttpSession session, Model model) {
+	public String getTodoList(Model model) {
 		List<Todo> todoList = todoService.getAllTodo();
 		model.addAttribute("todoList", todoList);
-		/** ログインユーザー情報をセッションへ入れる */
-		User loginUser = (User) session.getAttribute("loginUser");
-		model.addAttribute("loginUser", loginUser);
 		return "viewTodoList";
 	}
 
 	/** 検索ワードでTodoを取り出す */
 	@PostMapping("/viewTodoList")
-	public String searchTodoList(String searchWords, HttpSession session, Model model) {
+	public String searchTodoList(String searchWords, Model model) {
 		List<Todo> todoList = todoService.getSearchTodo(searchWords);
 		model.addAttribute("todoList", todoList);
-		User loginUser = (User) session.getAttribute("loginUser");
-		model.addAttribute("loginUser", loginUser);
 		return "viewTodoList";
 	}
 
+	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
-	public String getAdd( @ModelAttribute TodoForm todoForm, Model model) {
+	public String getAdd(TodoForm todoForm, Model model) {
 		List<User> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
+		model.addAttribute(todoForm);
 		return "addTodo";
 	}
 
+	/** 登録されたTodoのバリデーションチェックをして登録、その後にリスト画面へ戻る */
 	@PostMapping("/addTodo")
 	public String addTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
+		/*if (bindingResult.hasErrors()) {
+			System.out.println(todoForm);
 			return getAdd(todoForm, model);
-		}
-		todoService.addTodo(todoForm);
-		return "redirect:viewTodoList";
+		}*/
+		boolean addResult = todoService.addTodo(todoForm);
+		return "viewTodoList";
 	}
 
 	@PostMapping("/update")
