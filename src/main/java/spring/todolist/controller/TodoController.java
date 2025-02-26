@@ -44,24 +44,33 @@ public class TodoController {
 
 	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
-	public String getAdd(TodoForm todoForm, Model model) {
+	public String getAddTodo(TodoForm todoForm, Model model) {
 		List<User> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		model.addAttribute(todoForm);
 		return "addTodo";
 	}
 
-	/** 登録されたTodoのバリデーションチェックをして登録、その後にリスト画面へ戻る */
+	/** 入力されたTodoのバリデーションチェックをしてデータベースに登録、その後リスト画面へ戻る */
 	@PostMapping("/addTodo")
-	public String addTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
+	public String postAddTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
-			return getAdd(todoForm, model);
+			return getAddTodo(todoForm, model);
 		}
-		boolean addResult = todoService.addTodo(todoForm);
-		System.out.println(addResult);
-		
+		todoService.addTodo(todoForm);
 		return "redirect:/viewTodoList";
+	}
+	
+	/** 指定されたTodoのIDを元にデータベースから1件取得する */
+	@GetMapping("/update")
+	public String getTodoOne(TodoForm todoForm, Model model) {
+		List<User> assigneeList = userService.getUsersFullNameList();
+		model.addAttribute("assigneeList", assigneeList);
+		Todo todo = todoService.getTodoOne(todoForm.getId());
+		System.out.println("todo:" + todo);
+		model.addAttribute(todo);
+		return "updateTodo";
 	}
 
 	@PostMapping("/update")

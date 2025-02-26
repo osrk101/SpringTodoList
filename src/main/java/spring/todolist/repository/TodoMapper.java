@@ -5,7 +5,6 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import spring.todolist.domain.user.model.Todo;
-import spring.todolist.form.TodoForm;
 
 @Mapper
 public interface TodoMapper {
@@ -17,5 +16,11 @@ public interface TodoMapper {
 	List<Todo> getSearchTodo(String searchWords);
 	
 	/** Todo登録 */
-	boolean addTodo(TodoForm todoForm);
+	void addTodo(Todo todo);
+
+	/** Todo1件取得 */
+	Todo getTodoOne(Integer todoId);
+	
+	/** Todo更新 */
+	void updateTodo(Todo todo);
 }

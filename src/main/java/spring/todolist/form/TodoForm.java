@@ -12,24 +12,26 @@ import lombok.Data;
 public class TodoForm {
 
 	private Integer id;
-	
+
 	@NotNull
 	private Integer userId;
-	
+
 	private String familyName;
 	
 	private String firstName;
 	
 	@NotNull
 	private String itemName;
-	
+
 	private Date registrationDate;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expireDate;
 
 	private boolean isExpired;
 
 	private Date finishedDate;
+
+	private boolean isDeteled;
 
 }

@@ -10,11 +10,11 @@ public class Todo {
 	private int id;
 
 	private int userId;
-
+	
 	private String familyName;
 
 	private String firstName;
-
+	
 	private String itemName;
 
 	private Date registrationDate;
@@ -25,4 +25,5 @@ public class Todo {
 
 	private Date finishedDate;
 
+	private boolean isDeteled;
 }

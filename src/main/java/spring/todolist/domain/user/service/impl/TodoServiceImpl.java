@@ -2,6 +2,7 @@ package spring.todolist.domain.user.service.impl;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,11 @@ public class TodoServiceImpl implements TodoService {
 
 	@Autowired
 	private TodoMapper todoMapper;
+	
+	@Autowired
+	private ModelMapper modelMapper;
 
 	/** Todoリスト全取得 */
-
 	@Override
 	public List<Todo> getAllTodo() {
 		return todoMapper.getAllTodo();
@@ -32,16 +35,26 @@ public class TodoServiceImpl implements TodoService {
 		return todoMapper.getSearchTodo(searchWords);
 	}
 
-	/** Todo登録  */
+	/** Todo登録 */
 	@Override
-	public boolean addTodo(TodoForm todoForm) {
-		return todoMapper.addTodo(todoForm);
+	public void addTodo(TodoForm todoForm) {
+		Todo todo = modelMapper.map(todoForm, Todo.class);
+		todoMapper.addTodo(todo);
+	}
+	
+	/** Todo1件取得 */
+	@Override
+	public Todo getTodoOne(int todoId) {
+
+		System.out.println("todoId:" + todoId);
+		return todoMapper.getTodoOne(todoId);
 	}
 
 	/** Todo更新 */
 	@Override
 	public void updateTodo(TodoForm todoForm) {
-
+		Todo todo = modelMapper.map(todoForm, Todo.class);
+		todoMapper.updateTodo(todo);
 	}
 
 	/** Todo削除 */

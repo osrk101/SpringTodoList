@@ -10,7 +10,8 @@
 	<![CDATA[
 		SELECT * FROM todo_items
 		LEFT JOIN users ON users.id = todo_items.user_id 
-		ORDER BY todo_items.expire_date ASC;
+		WHERE todo_items.is_deleted = 0 
+		ORDER BY expire_date ASC;
 		]]>
 	</select>
 
@@ -33,6 +34,15 @@
 		VALUES (#{userId}, #{itemName}, CURRENT_DATE, #{expireDate}, #{finishedDate});
 		]]>
 	</insert>
+
+<!-- Todo1件取得 -->
+<select id="getTodoOne">
+	<![CDATA[
+		SELECT * FROM todo_items t
+		LEFT JOIN users u ON u.id = t.user_id 
+		WHERE t.id = #{todoId} AND t.is_deleted = 0;
+		]]>
+</select>
 
 
 </mapper>
