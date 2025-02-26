@@ -4,14 +4,16 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.transaction.Transactional;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
 import spring.todolist.form.TodoForm;
 import spring.todolist.repository.TodoMapper;
 
 @Service
+
+@Transactional
 public class TodoServiceImpl implements TodoService {
 
 	@Autowired
@@ -31,14 +33,12 @@ public class TodoServiceImpl implements TodoService {
 	}
 
 	/** Todo登録  */
-	@Transactional
 	@Override
 	public boolean addTodo(TodoForm todoForm) {
 		return todoMapper.addTodo(todoForm);
 	}
 
 	/** Todo更新 */
-	@Transactional
 	@Override
 	public void updateTodo(TodoForm todoForm) {
 

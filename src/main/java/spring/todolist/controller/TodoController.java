@@ -54,12 +54,14 @@ public class TodoController {
 	/** 登録されたTodoのバリデーションチェックをして登録、その後にリスト画面へ戻る */
 	@PostMapping("/addTodo")
 	public String addTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
-		/*if (bindingResult.hasErrors()) {
-			System.out.println(todoForm);
+		if (bindingResult.hasErrors()) {
+			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
 			return getAdd(todoForm, model);
-		}*/
+		}
 		boolean addResult = todoService.addTodo(todoForm);
-		return "viewTodoList";
+		System.out.println(addResult);
+		
+		return "redirect:/viewTodoList";
 	}
 
 	@PostMapping("/update")
