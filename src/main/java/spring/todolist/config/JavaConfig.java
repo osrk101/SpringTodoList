@@ -11,6 +11,5 @@ public class JavaConfig {
 	@Bean
 	ModelMapper modelMapper() {
 		return new ModelMapper();
-
 	}
 }

@@ -45,16 +45,19 @@ public class TodoServiceImpl implements TodoService {
 	/** Todo1件取得 */
 	@Override
 	public Todo getTodoOne(int todoId) {
-
-		System.out.println("todoId:" + todoId);
 		return todoMapper.getTodoOne(todoId);
 	}
 
 	/** Todo更新 */
 	@Override
 	public void updateTodo(TodoForm todoForm) {
+		System.out.println("todoForm:" + todoForm);
 		Todo todo = modelMapper.map(todoForm, Todo.class);
+
+		System.out.println("todo:" + todo);
 		todoMapper.updateTodo(todo);
+		
+		
 	}
 
 	/** Todo削除 */

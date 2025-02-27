@@ -55,26 +55,30 @@ public class TodoController {
 	@PostMapping("/addTodo")
 	public String postAddTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
-			bindingResult.getAllErrors().forEach(error -> System.out.println(error.getDefaultMessage()));
 			return getAddTodo(todoForm, model);
 		}
 		todoService.addTodo(todoForm);
 		return "redirect:/viewTodoList";
 	}
-	
+
 	/** 指定されたTodoのIDを元にデータベースから1件取得する */
-	@GetMapping("/update")
-	public String getTodoOne(TodoForm todoForm, Model model) {
+	@GetMapping("/updateTodo")
+	public String getUpdateTodo(TodoForm todoForm, Model model) {
 		List<User> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(todoForm.getId());
-		System.out.println("todo:" + todo);
 		model.addAttribute(todo);
+		todoForm.setExpireDate(todo.getExpireDate());
+		model.addAttribute(todoForm);
 		return "updateTodo";
 	}
 
-	@PostMapping("/update")
-	public String updateTodo() {
+	@PostMapping("/updateTodo")
+	public String postupdateTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			return getUpdateTodo(todoForm, model);
+		}
+		todoService.updateTodo(todoForm);
 		return null;
 
 	}
