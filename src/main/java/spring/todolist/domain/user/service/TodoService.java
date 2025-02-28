@@ -1,5 +1,6 @@
 package spring.todolist.domain.user.service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import spring.todolist.domain.user.model.Todo;
@@ -30,4 +31,7 @@ public interface TodoService {
 
 	/** Todo完了処理　*/
 	public void setFinishedDate();
-}
+	
+	/** LocalDate型をjava.sql.date型に変換 */
+	public java.sql.Date convertToSqlDate(LocalDate localDate);
+	}

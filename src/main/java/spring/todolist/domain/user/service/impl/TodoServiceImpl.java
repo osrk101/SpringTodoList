@@ -1,5 +1,6 @@
 package spring.todolist.domain.user.service.impl;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -51,13 +52,8 @@ public class TodoServiceImpl implements TodoService {
 	/** Todo更新 */
 	@Override
 	public void updateTodo(TodoForm todoForm) {
-		System.out.println("todoForm:" + todoForm);
 		Todo todo = modelMapper.map(todoForm, Todo.class);
-
-		System.out.println("todo:" + todo);
 		todoMapper.updateTodo(todo);
-		
-		
 	}
 
 	/** Todo削除 */
@@ -78,5 +74,10 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public void setFinishedDate() {
 
+	}
+	
+	/** LocalDate型をjava.sql.date型に変換 */
+	public java.sql.Date convertToSqlDate(LocalDate localDate){
+		return java.sql.Date.valueOf(localDate);
 	}
 }

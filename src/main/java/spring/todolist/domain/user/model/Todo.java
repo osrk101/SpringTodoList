@@ -1,6 +1,6 @@
 package spring.todolist.domain.user.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,15 +20,16 @@ public class Todo {
 	
 	private String itemName;
 	
-	private Date registrationDate;
+	@NotNull
+	private LocalDate registrationDate;
 	
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date expireDate;
+	private LocalDate expireDate;
 
 	private boolean isExpired;
 
-	private Date finishedDate;
+	private LocalDate finishedDate;
 
 	private boolean isDeteled;
 }

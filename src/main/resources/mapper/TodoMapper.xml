@@ -44,10 +44,10 @@
 		]]>
   </select>
 
-  <!-- Todo修正 -->
+  <!-- Todo更新 -->
   <update id="updateTodo">
   <![CDATA[
-    UPDATE todo_items SET user_id = #{userId}, item_name = #{itemName}, expire_date = #{expireDate}, finished_date = #{finishedDate}, is_finished = #{isFinished} 
+    UPDATE todo_items SET user_id = #{userId}, item_name = #{itemName}, expire_date = #{expireDate}, finished_date = #{finishedDate} 
     WHERE id = #{id};
     ]]>
   </update>
