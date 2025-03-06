@@ -1,5 +1,6 @@
 package spring.todolist.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -74,26 +75,34 @@ public class TodoController {
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
 		model.addAttribute("todoForm", todoForm);
+		System.out.println("データベースから取得したtodo" + todoForm);
 		return "updateTodo";
 	}
 
 	@PostMapping("/updateTodo")
 	public String postupdateTodo(@Valid @ModelAttribute ("todoForm") TodoForm todoForm, BindingResult bindingResult, Model model) {
-		System.out.println("ポストされたTodoForm:" + todoForm);
+		System.out.println(todoForm);
 		if (bindingResult.hasErrors()) {
 			List<User> assigneeList = userService.getUsersFullNameList();
 			model.addAttribute("assigneeList", assigneeList);
 			return "updateTodo";
+		}
+		if ("1".equals(todoForm.getStringFinished()) && todoForm.getFinishedDate() == null){
+			todoForm.setFinishedDate(LocalDate.now());
+		} else if (!"1".equals(todoForm.getStringFinished())){
+			todoForm.setFinishedDate(null);
 		}
 		todoService.updateTodo(todoForm);
 		return "redirect:/viewTodoList";
 
 	}
 
-
-
-	@PostMapping("/finished")
-	public void todoFinished(Model model) {
-		todoService.setFinishedDate();
+	@GetMapping("/finishedTodo")
+	public String todoFinished(TodoForm todoForm) {
+		todoForm.setFinishedDate(LocalDate.now());
+		todoService.setFinishedDate(todoForm);
+		return "redirect:/viewTodoList";
+		
 	}
+	
 }

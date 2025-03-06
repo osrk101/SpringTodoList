@@ -30,6 +30,8 @@ public class Todo {
 	private boolean isExpired;
 
 	private LocalDate finishedDate;
+	
+	private String stringFinished;
 
 	private boolean isDeteled;
 }

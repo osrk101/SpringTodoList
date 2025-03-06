@@ -68,7 +68,7 @@
 					<input
 						type="hidden"
 						th:field="*{id}">
-					<!-- 登録日 -->	
+					<!-- 登録日 -->
 					<input
 						type="hidden"
 						th:field="*{registrationDate}">
@@ -114,7 +114,22 @@
 							class="invalid-feedback"
 							th:errors="*{expireDate}"></div>
 					</div>
+					<p>
+						finishedDate: <span th:text="*{finishedDate}"></span>
+						<p>Finished Status: <span th:text="*{finished}"></span></p>
+					</p>
 
+					<!-- 完了 -->
+					<div class="form-check">
+						">
+						<input
+							type="checkbox"
+							class="form-check-input"
+							th:field="*{stringFinished}"
+							th:value="1"
+							th:checked="*{finished}">
+						<label for="stringFinished">完了</label>
+					</div>
 
 					<!-- ボタン -->
 					<button

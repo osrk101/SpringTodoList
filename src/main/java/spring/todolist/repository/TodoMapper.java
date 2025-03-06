@@ -23,4 +23,13 @@ public interface TodoMapper {
 	
 	/** Todo更新 */
 	void updateTodo(Todo todo);
+	
+	/** Todo削除 */
+	
+	/** Todo削除確認 */
+	
+	
+	
+	/** Todo完了処理 */
+	void finishedTodo(Todo todo);
 }

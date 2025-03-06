@@ -33,6 +33,12 @@ public class TodoForm {
 
 	private LocalDate finishedDate;
 
+	private String stringFinished;
+
+	public  boolean getFinished() {
+		return finishedDate != null;
+	}
+
 	private boolean isDeteled;
 
 }
