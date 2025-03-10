@@ -59,7 +59,7 @@
 	<!-- Todo完了処理 -->
 	<update id="finishedTodo">
    <![CDATA[
-    UPDATE todo_items SET finished_date = #{finished_date}
+    UPDATE todo_items SET finished_date = #{finishedDate}
     WHERE id = #{id};
     ]]>
 	</update>

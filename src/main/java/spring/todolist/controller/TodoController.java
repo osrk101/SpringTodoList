@@ -74,6 +74,9 @@ public class TodoController {
 		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
+		if(todoForm.getFinishedDate() != null) {
+			todoForm.setStringFinished("1");
+		}
 		model.addAttribute("todoForm", todoForm);
 		System.out.println("データベースから取得したtodo" + todoForm);
 		return "updateTodo";
