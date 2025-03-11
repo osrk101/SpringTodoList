@@ -39,7 +39,7 @@
 			<li class="nav-item"><a
 				class="nav-link"
 				href="/viewTodoList">作業一覧</a></li>
-			<li class="nav-item active"><a
+			<li class="nav-item"><a
 				class="nav-link"
 				href="/addTodo">作業登録</a></li>
 		</ul>
@@ -47,7 +47,7 @@
 			class="navbar-text text-light"
 			th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
 		<form
-			action="Logout"
+			action="logout"
 			method="get"
 			class="form-inline ml-2">
 			<button class="btn btn-outline-light">ログアウト</button>
@@ -59,7 +59,6 @@
 	<div class="container mt-4">
 		<div class="row">
 			<div class="col-sm-12">
-
 				<form
 					action="/updateTodo"
 					method="post"
@@ -134,7 +133,7 @@
 					<button
 						type="button"
 						class="btn btn-outline-secondary"
-						onclick="history.back()">キャンセル</button>
+						onclick="location.href='/viewTodoList';">キャンセル</button>
 				</form>
 			</div>
 		</div>

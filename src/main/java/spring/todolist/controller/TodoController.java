@@ -28,22 +28,20 @@ public class TodoController {
 
 	@Autowired
 	UserService userService;
-	
-	@Autowired 
+
+	@Autowired
 	ModelMapper modelMapper;
 
 	/** TodoListを全取得してviewTodoListへ送る */
+	/** 検索ワードが入力されていれば検索してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
-	public String getTodoList(Model model) {
-		List<Todo> todoList = todoService.getAllTodo();
-		model.addAttribute("todoList", todoList);
-		return "viewTodoList";
-	}
-
-	/** 検索ワードでTodoを取り出す */
-	@PostMapping("/viewTodoList")
-	public String searchTodoList(String searchWords, Model model) {
-		List<Todo> todoList = todoService.getSearchTodo(searchWords);
+	public String getTodoList(String searchWords, Model model) {
+		List<Todo> todoList = null;
+		if (searchWords == null) {
+			todoList = todoService.getAllTodo();
+		} else {
+			todoList = todoService.getSearchTodo(searchWords);
+		}
 		model.addAttribute("todoList", todoList);
 		return "viewTodoList";
 	}
@@ -74,30 +72,44 @@ public class TodoController {
 		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
-		if(todoForm.getFinishedDate() != null) {
+		if (todoForm.getFinishedDate() != null) {
 			todoForm.setStringFinished("1");
 		}
 		model.addAttribute("todoForm", todoForm);
-		System.out.println("データベースから取得したtodo" + todoForm);
 		return "updateTodo";
 	}
 
+	/** Todoの編集をする　完了チェックもここで行う */
 	@PostMapping("/updateTodo")
-	public String postupdateTodo(@Valid @ModelAttribute ("todoForm") TodoForm todoForm, BindingResult bindingResult, Model model) {
-		System.out.println(todoForm);
+	public String postUpdateTodo(@Valid @ModelAttribute("todoForm") TodoForm todoForm, BindingResult bindingResult,
+			Model model) {
 		if (bindingResult.hasErrors()) {
 			List<User> assigneeList = userService.getUsersFullNameList();
 			model.addAttribute("assigneeList", assigneeList);
 			return "updateTodo";
 		}
-		if ("1".equals(todoForm.getStringFinished()) && todoForm.getFinishedDate() == null){
+		if ("1".equals(todoForm.getStringFinished()) && todoForm.getFinishedDate() == null) {
 			todoForm.setFinishedDate(LocalDate.now());
-		} else if (!"1".equals(todoForm.getStringFinished())){
+		} else if (!"1".equals(todoForm.getStringFinished())) {
 			todoForm.setFinishedDate(null);
 		}
 		todoService.updateTodo(todoForm);
 		return "redirect:/viewTodoList";
+	}
 
+	/** 選択したTodoの削除確認 */
+	@GetMapping("/confirmDelete")
+	public String getConfirmDelete(@RequestParam("id") @ModelAttribute("todo") Integer id, Model model) {
+		Todo todo = todoService.getTodoOne(id);
+		model.addAttribute("todo", todo);
+		return "confirmDelete";
+	}
+
+	/** Todoの削除 */
+	@GetMapping("/deleteTodo")
+	public String getDeleteTodo(@RequestParam Integer id) {
+		todoService.deleteTodo(id);
+		return "redirect:/viewTodoList";
 	}
 
 	@GetMapping("/finishedTodo")
@@ -105,7 +117,6 @@ public class TodoController {
 		todoForm.setFinishedDate(LocalDate.now());
 		todoService.setFinishedDate(todoForm);
 		return "redirect:/viewTodoList";
-		
 	}
-	
+
 }

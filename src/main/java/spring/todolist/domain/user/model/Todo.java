@@ -13,24 +13,29 @@ public class Todo {
 	private int id;
 
 	private int userId;
-	
+
 	private String familyName;
 
 	private String firstName;
-	
+
 	private String itemName;
-	
+
 	@NotNull
 	private LocalDate registrationDate;
-	
+
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expireDate;
 
-	private boolean isExpired;
+	public boolean isExpired() {
+		if (finishedDate != null) {
+			return false;
+		}
+		return expireDate.isBefore(LocalDate.now());
+	}
 
 	private LocalDate finishedDate;
-	
+
 	private String stringFinished;
 
 	private boolean isDeteled;

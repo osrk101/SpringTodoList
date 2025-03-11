@@ -47,7 +47,7 @@
 			class="navbar-text text-light"
 			th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
 		<form
-			action="Logout"
+			action="logout"
 			method="get"
 			class="form-inline ml-2">
 			<button class="btn btn-outline-light">ログアウト</button>
@@ -83,7 +83,7 @@
 						<select
 							class="form-control"
 							th:field="*{userId}"
-							th:errorClass=" is-invalid">
+							th:errorClass="is-invalid">
 							<option value="">担当者を選択</option>
 							<option
 								th:each="user : ${assigneeList}"
@@ -119,7 +119,6 @@
 							for="1">完了</label>
 					</div>
 
-
 					<!-- ボタン -->
 					<button
 						type="submit"
@@ -127,7 +126,7 @@
 					<button
 						type="button"
 						class="btn btn-outline-secondary"
-						onclick="history.back()">キャンセル</button>
+						onclick="location.href='/viewTodoList';">キャンセル</button>
 				</form>
 			</div>
 		</div>

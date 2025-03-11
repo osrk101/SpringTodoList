@@ -19,7 +19,7 @@ public class TodoServiceImpl implements TodoService {
 
 	@Autowired
 	private TodoMapper todoMapper;
-	
+
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -41,7 +41,7 @@ public class TodoServiceImpl implements TodoService {
 		Todo todo = modelMapper.map(todoForm, Todo.class);
 		todoMapper.addTodo(todo);
 	}
-	
+
 	/** Todo1件取得 */
 	@Override
 	public Todo getTodoOne(int todoId) {
@@ -55,17 +55,16 @@ public class TodoServiceImpl implements TodoService {
 		todoMapper.updateTodo(todo);
 	}
 
+	/** Todo削除確認 */
+	@Override
+	public void confirmDelete(TodoForm todoForm) {
+	}
+
 	/** Todo削除 */
 	@Transactional
 	@Override
-	public void deleteTodo(TodoForm todoForm) {
-
-	}
-
-	/** Todo削除確認 */
-	@Override
-	public void ConfirmDelete(TodoForm todoForm) {
-
+	public void deleteTodo(int todoId) {
+		todoMapper.deleteTodo(todoId);
 	}
 
 	/** Todo完了　*/

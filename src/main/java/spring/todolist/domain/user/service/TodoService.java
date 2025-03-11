@@ -18,16 +18,16 @@ public interface TodoService {
 
 	/** Todo1件取得 */
 	public Todo getTodoOne(int todoId);
-	
+
 	/** Todo更新 */
 	public void updateTodo(TodoForm todoForm);
 
-	/** Todo削除 */
-	public void deleteTodo(TodoForm todoForm);
-
 	/** Todo削除確認 */
-	public void ConfirmDelete(TodoForm todoForm);
+	public void confirmDelete(TodoForm todoForm);
+
+	/** Todo削除 */
+	public void deleteTodo(int todoId);
 
 	/** Todo完了処理　*/
 	public void setFinishedDate(TodoForm todoForm);
-	}
+}

@@ -14,22 +14,19 @@ public interface TodoMapper {
 
 	/** Todo検索 */
 	List<Todo> getSearchTodo(String searchWords);
-	
+
 	/** Todo登録 */
 	void addTodo(Todo todo);
 
 	/** Todo1件取得 */
 	Todo getTodoOne(Integer todoId);
-	
+
 	/** Todo更新 */
 	void updateTodo(Todo todo);
-	
+
 	/** Todo削除 */
-	
-	/** Todo削除確認 */
-	
-	
-	
+	void deleteTodo(Integer todoId);
+
 	/** Todo完了処理 */
 	void finishedTodo(Todo todo);
 }

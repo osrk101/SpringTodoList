@@ -53,8 +53,13 @@
 	</update>
 
 	<!-- Todo削除 -->
+	<update id="deleteTodo">
+	  <![CDATA[
+    UPDATE todo_items SET is_deleted = 1
+    WHERE id = #{id};
+    ]]>
+	</update>
 
-	<!-- Todo削除確認 -->
 
 	<!-- Todo完了処理 -->
 	<update id="finishedTodo">

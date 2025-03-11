@@ -4,148 +4,155 @@
 <head>
 <meta charset="UTF-8">
 <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- CSS読込 -->
 <link
-    rel="stylesheet"
-    th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
 <!-- JS読込 -->
 <script
-    th:src="@{/webjars/jquery/jquery.min.js}"
-    defer></script>
+	th:src="@{/webjars/jquery/jquery.min.js}"
+	defer></script>
 <script
-    th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
-    defer></script>
+	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
+	defer></script>
 <title>作業リスト</title>
 </head>
 
 <body>
-    <!-- ナビゲーション -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-        <span class="navbar-brand">TODOリスト</span>
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div
-            class="collapse navbar-collapse"
-            id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a
-                    class="nav-link"
-                    th:href="@{/viewTodoList}">作業一覧</a></li>
-                <li class="nav-item active"><a
-                    class="nav-link"
-                    th:href="@{/addTodo}">作業登録</a></li>
-            </ul>
-            <span
-                class="navbar-text text-light"
-                th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
-            <form
-                action="Logout"
-                method="get"
-                class="form-inline ml-2">
-                <button class="btn btn-outline-light">ログアウト</button>
-            </form>
-        </div>
-    </nav>
-    <!-- コンテンツ -->
-    <div class="container text-center">
-        <div class="mx-auto">
-            <h2 class="text-center mb-4">作業一覧</h2>
-            <form
-                th:action="@{/viewTodoList}"
-                method="post">
-                <input
-                    type="text"
-                    name="searchWords">
-                <input
-                    type="submit"
-                    value="検索"
-                    class="btn btn-warning btn-sm" />
-            </form>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th
-                            class="col-md-auto"
-                            scope="col">項目名</th>
-                        <th
-                            class="col-md-auto"
-                            scope="col">担当者</th>
-                        <th
-                            class="col-md-auto"
-                            scope="col">登録日</th>
-                        <th
-                            class="col-md-auto"
-                            scope="col">期限日</th>
-                        <th
-                            class="col-md-auto"
-                            scope="col">完了日</th>
-                        <th
-                            class="col-md-auto"
-                            scope="col">操作</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="todo:${todoList}">
-                        <td th:text="${todo.itemName}"></td>
-                        <td th:text="|${todo.familyName} ${todo.firstName}|"></td>
-                        <td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
-                        <td th:text="${#temporals.format(todo.finishedDate, 'yyyy-MM-dd')}"></td>
-                        <td>
-                            <div class="d-flex gap-2">
-                                <form
-                                    th:action="@{/finishedTodo}"
-                                    method="get">
-                                    <input
-                                        type="hidden"
-                                        name="id"
-                                        th:value="${todo.id}">
-                                    <input
-                                        type="submit"
-                                        value="完了"
-                                        class="btn btn-success btn-sm" />
-                                </form>
-                                <form
-                                    th:action="@{/updateTodo}"
-                                    method="get">
-                                    <input
-                                        type="hidden"
-                                        name="id"
-                                        th:value="${todo.id}">
-                                    <input
-                                        type="submit"
-                                        value="更新"
-                                        class="btn btn-warning btn-sm" />
-                                </form>
-                                <form
-                                    th:action="@{/deleteTodo}"
-                                    method="post">
-                                    <input
-                                        type="hidden"
-                                        name="id"
-                                        th:value="${todo.id}">
-                                    <input
-                                        type="submit"
-                                        value="削除"
-                                        class="btn btn-danger btn-sm" />
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+	<!-- ナビゲーション -->
+	<nav class="navbar navbar-expand-md navbar-dark bg-primary">
+		<span class="navbar-brand">TODOリスト</span>
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-toggle="collapse"
+			data-target="#navbarNav"
+			aria-controls="navbarNav"
+			aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div
+			class="collapse navbar-collapse"
+			id="navbarNav">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a
+					class="nav-link"
+					th:href="@{/viewTodoList}">作業一覧</a></li>
+				<li class="nav-item"><a
+					class="nav-link"
+					th:href="@{/addTodo}">作業登録</a></li>
+			</ul>
+			<span
+				class="navbar-text text-light"
+				th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
+			<form
+				action="logout"
+				method="get"
+				class="form-inline ml-2">
+				<button class="btn btn-outline-light">ログアウト</button>
+			</form>
+		</div>
+	</nav>
+	<!-- コンテンツ -->
+	<div class="container text-center">
+		<div class="mx-auto">
+			<h2 class="text-center mb-4">作業一覧</h2>
+			<form
+				th:action="@{/viewTodoList}"
+				method="get">
+				<input
+					type="text"
+					name="searchWords">
+				<input
+					type="submit"
+					value="検索"
+					class="btn btn-warning btn-sm" />
+			</form>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th
+							class="col-md-auto"
+							scope="col">項目名</th>
+						<th
+							class="col-md-auto"
+							scope="col">担当者</th>
+						<th
+							class="col-md-auto"
+							scope="col">登録日</th>
+						<th
+							class="col-md-auto"
+							scope="col">期限日</th>
+						<th
+							class="col-md-auto"
+							scope="col">完了日</th>
+						<th
+							class="col-md-auto"
+							scope="col">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr
+						class="table"
+						th:classappend="${todo.isExpired ? 'table-danger' : ''}"
+						th:each="todo:${todoList}">
+						<td th:text="${todo.itemName}"></td>
+						<td th:text="|${todo.familyName} ${todo.firstName}|"></td>
+						<td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
+						<td th:text="${#temporals.format(todo.finishedDate, 'yyyy-MM-dd')}"></td>
+						<td>
+							<div class="d-flex gap-2">
+								<form
+									th:action="@{/finishedTodo}"
+									method="get">
+									<input
+										type="hidden"
+										name="id"
+										th:value="${todo.id}">
+									<input
+										type="submit"
+										value="完了"
+										class="btn btn-success btn-sm" />
+								</form>
+								<form
+									th:action="@{/updateTodo}"
+									method="get">
+									<input
+										type="hidden"
+										name="id"
+										th:value="${todo.id}">
+									<input
+										type="submit"
+										value="更新"
+										class="btn btn-warning btn-sm" />
+								</form>
+								<form
+									th:action="@{/confirmDelete}"
+									method="get">
+									<input
+										type="hidden"
+										name="id"
+										th:value="${todo.id}">
+									<input
+										type="submit"
+										value="削除"
+										class="btn btn-danger btn-sm" />
+								</form>
+							</div>
+						</td>
+					</tr>
+
+
+
+
+				</tbody>
+			</table>
+		</div>
+	</div>
 </body>
 
 </html>

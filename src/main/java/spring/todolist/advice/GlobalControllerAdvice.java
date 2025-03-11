@@ -1,4 +1,4 @@
-package spring.todolist.aspect;
+package spring.todolist.advice;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,6 @@ public class GlobalControllerAdvice {
 			model.addAttribute("loginUser", loginUser);
 		}
 	}
-
 	/** データベース関連の例外処理 */
 	@ExceptionHandler(DataAccessException.class)
 	public String dataAccessExceptionHandler(DataAccessException e, Model model) {
@@ -30,7 +29,7 @@ public class GlobalControllerAdvice {
 		model.addAttribute("error", "");
 
 		// メッセージをModelに登録
-		model.addAttribute("message", "DataAccessExceptionが発生しました");
+		model.addAttribute("message", "DataAccessExceptionエラーが発生しました");
 
 		// HTTPのエラーコード(500)をModelに登録
 		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -46,7 +45,7 @@ public class GlobalControllerAdvice {
 		model.addAttribute("error", "");
 
 		// メッセージをModelに登録
-		model.addAttribute("message", "Exceptionが発生しました");
+		model.addAttribute("message", "Exceptionエラーが発生しました");
 
 		// HTTPのエラーコード(500)をModelに登録
 		model.addAttribute("status", HttpStatus.INTERNAL_SERVER_ERROR);

@@ -27,17 +27,14 @@ public class UserController {
 	@GetMapping("/index")
 	public String getIndex(@ModelAttribute UserForm userForm,Model model) {
 		model.addAttribute("userForm", userForm);
-		
 		return "index";
 	}
 
 	@PostMapping("/index")
-	public String PostIndex(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession session,
+	public String postIndex(@Valid @ModelAttribute UserForm userForm, BindingResult bindingResult, HttpSession session,
 			Model model) {
-
 		if (bindingResult.hasErrors())
 			return getIndex(userForm, model);
-
 		User loginUser = userService.verifyLogin(userForm);
 		if (loginUser == null) {
 			model.addAttribute("loginError", "ユーザー名またはパスワードが間違っています");
@@ -45,5 +42,13 @@ public class UserController {
 		}
 		session.setAttribute("loginUser", loginUser);
 		return "redirect:/viewTodoList";
+	}
+	
+	@GetMapping("/logout")
+	public String getLogout(HttpSession session){
+		if (session != null) {
+			session.invalidate();
+		}
+		return "redirect:/index";
 	}
 }
