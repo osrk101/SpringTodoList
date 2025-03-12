@@ -27,7 +27,11 @@
 		<!-- ログイン画面タイトル -->
 		<div class="row">
 			<div class="col text-center">
-				<h1>ログイン</h1>
+				<h2>ログイン</h2>
+				<p
+					th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
+					th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
+					class="text-danger">ログインエラーメッセージ</p>
 			</div>
 		</div>
 
@@ -38,7 +42,7 @@
 			<!-- 中央のカラム -->
 			<div class="col-sm-6">
 				<form
-					action="index"
+					th:action="@{/authenticate}"
 					method="post"
 					class="form-input"
 					th:object="${userForm}">

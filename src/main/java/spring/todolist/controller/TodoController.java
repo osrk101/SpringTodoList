@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -57,7 +56,7 @@ public class TodoController {
 
 	/** 入力されたTodoのバリデーションチェックをしてデータベースに登録、その後リスト画面へ戻る */
 	@PostMapping("/addTodo")
-	public String postAddTodo(@Valid @ModelAttribute TodoForm todoForm, BindingResult bindingResult, Model model) {
+	public String postAddTodo(@Valid TodoForm todoForm, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return getAddTodo(todoForm, model);
 		}
@@ -67,7 +66,7 @@ public class TodoController {
 
 	/** 指定されたTodoのIDを元にデータベースから1件取得する */
 	@GetMapping("/updateTodo")
-	public String getUpdateTodo(@RequestParam("id") @ModelAttribute("todoForm") Integer id, Model model) {
+	public String getUpdateTodo(@RequestParam("id") Integer id, Model model) {
 		List<User> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(id);
@@ -81,7 +80,7 @@ public class TodoController {
 
 	/** Todoの編集をする　完了チェックもここで行う */
 	@PostMapping("/updateTodo")
-	public String postUpdateTodo(@Valid @ModelAttribute("todoForm") TodoForm todoForm, BindingResult bindingResult,
+	public String postUpdateTodo(@Valid TodoForm todoForm, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
 			List<User> assigneeList = userService.getUsersFullNameList();
@@ -99,7 +98,7 @@ public class TodoController {
 
 	/** 選択したTodoの削除確認 */
 	@GetMapping("/confirmDelete")
-	public String getConfirmDelete(@RequestParam("id") @ModelAttribute("todo") Integer id, Model model) {
+	public String getConfirmDelete(@RequestParam("id") Integer id, Model model) {
 		Todo todo = todoService.getTodoOne(id);
 		model.addAttribute("todo", todo);
 		return "confirmDelete";
