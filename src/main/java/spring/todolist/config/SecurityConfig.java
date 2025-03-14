@@ -17,7 +17,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
+	
 	@Bean
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -39,22 +39,22 @@ public class SecurityConfig {
 
 		//ログイン不要ページの設定
 		http.authorizeHttpRequests(authorize -> authorize //直リンクOK
-				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() //直リンクOK
 				.requestMatchers(mvc.pattern("/index")).permitAll()//直リンクOK
-        .requestMatchers(mvc.pattern("/authenticate")).permitAll()
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.anyRequest().authenticated());
 
 		// ログイン処理
 		http.formLogin(login -> login
+				.loginProcessingUrl("/login")
 				.loginPage("/index")
-				.failureUrl("/index")
-				.usernameParameter("id")
-				.passwordParameter("pass")
-				.defaultSuccessUrl("/viewTodoList", true)
+				.failureUrl("/index?error")
+				.usernameParameter("username")
+				.passwordParameter("password")
+				.defaultSuccessUrl("/viewTodoList",true)
 				.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")
-						.logoutSuccessUrl("/login?logout"));
+						.logoutSuccessUrl("/index"));
 
 		http.headers(headers -> headers
 				.frameOptions(FrameOptionsConfig::disable));

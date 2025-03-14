@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import spring.todolist.domain.user.model.Todo;
-import spring.todolist.domain.user.model.User;
 import spring.todolist.domain.user.service.TodoService;
 import spring.todolist.domain.user.service.UserService;
 import spring.todolist.form.TodoForm;
 
 @Controller
+@Slf4j
 public class TodoController {
 
 	@Autowired
@@ -27,7 +29,7 @@ public class TodoController {
 
 	@Autowired
 	UserService userService;
-
+	
 	@Autowired
 	ModelMapper modelMapper;
 
@@ -35,10 +37,12 @@ public class TodoController {
 	/** 検索ワードが入力されていれば検索してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
 	public String getTodoList(String searchWords, Model model) {
+		log.info("getTodoList() が呼ばれました。");
 		List<Todo> todoList = null;
 		if (searchWords == null) {
 			todoList = todoService.getAllTodo();
 		} else {
+			log.error("ユーザー更新でエラー");
 			todoList = todoService.getSearchTodo(searchWords);
 		}
 		model.addAttribute("todoList", todoList);

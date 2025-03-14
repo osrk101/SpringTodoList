@@ -5,10 +5,20 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="spring.todolist.repository.UserMapper">
 
-  <!-- 姓名リスト取得 -->
-  <select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.User">
-    SELECT id , family_name , first_name FROM users;
-  </select>
+	<!-- 姓名リスト取得 -->
+	<select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.User">
+		SELECT id , family_name , first_name FROM users;
+	</select>
+
+	<!-- ログインユーザー情報取得 -->
+	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.User">
+		select
+		*
+		from
+		users
+		where
+		user = #{username}
+	</select>
 
 </mapper>
   

@@ -2,16 +2,18 @@ package spring.todolist.domain.user.model;
 
 import lombok.Data;
 
-@Data
 public class User {
+	@Data
+	public class UserDetails {
 
-	private int id;
+		private int id;
 
-	private String userName;
+		private String userName;
 
-	private Integer pass;
+		private String pass;
 
-	private String familyName;
+		private String familyName;
 
-	private String firstName;
+		private String firstName;
+	}
 }

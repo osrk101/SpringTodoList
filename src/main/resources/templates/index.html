@@ -42,22 +42,18 @@
 			<!-- 中央のカラム -->
 			<div class="col-sm-6">
 				<form
-					th:action="@{/authenticate}"
+					th:action="@{/login}"
 					method="post"
-					class="form-input"
-					th:object="${userForm}">
+					class="form-input">
 					<!-- ユーザー名 -->
 					<div class="form-group">
-						<label for="userName">ユーザー名</label>
+						<label for="username">ユーザー名</label>
 						<input
 							type="text"
 							class="form-control"
-							th:field="*{userName}"
-							th:errorClass="is-invalid"
-							placeholder="ユーザー名を入力">
-						<div
-							class="invalid-feedback"
-							th:errors="*{userName}"></div>
+							name="username"
+							placeholder="ユーザー名を入力"
+							required>
 					</div>
 					<!-- パスワード -->
 					<div class="form-group">
@@ -65,17 +61,9 @@
 						<input
 							type="password"
 							class="form-control"
-							th:field="*{pass}"
-							th:errorClass="is-invalid"
-							placeholder="パスワードを入力">
-						<div
-							class="invalid-feedback"
-							th:errors="*{pass}"></div>
-					</div>
-					<div
-						th:if="${loginError}"
-						class="alert alert-danger">
-						<p th:text="${loginError}"></p>
+							name="password"
+							placeholder="パスワードを入力"
+							required>
 					</div>
 					<!-- ログインボタン -->
 					<button
