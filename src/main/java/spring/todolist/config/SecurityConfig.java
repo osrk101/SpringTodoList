@@ -17,11 +17,6 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 
 	@Bean
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
@@ -32,6 +27,11 @@ public class SecurityConfig {
 	AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration)
 			throws Exception {
 		return authenticationConfiguration.getAuthenticationManager();
+	}
+
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 
 	@Bean
@@ -50,7 +50,7 @@ public class SecurityConfig {
 				.failureUrl("/index?error")
 				.usernameParameter("username")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/viewTodoList",true)
+				.defaultSuccessUrl("/viewTodoList", true)
 				.permitAll())
 				.logout(logout -> logout
 						.logoutUrl("/logout")

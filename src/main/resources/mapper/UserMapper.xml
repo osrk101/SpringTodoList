@@ -6,14 +6,14 @@
 <mapper namespace="spring.todolist.repository.UserMapper">
 
 	<!-- 姓名リスト取得 -->
-	<select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.User">
+	<select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.MUser">
 		SELECT id , family_name , first_name FROM users;
 	</select>
 
 	<!-- ログインユーザー情報取得 -->
-	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.User">
+	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.MUser">
 		select
-		*
+		user AS username, pass AS password, family_name, first_name  
 		from
 		users
 		where

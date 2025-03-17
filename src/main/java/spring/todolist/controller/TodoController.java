@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import spring.todolist.domain.user.model.MUser;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
 import spring.todolist.domain.user.service.UserService;
@@ -52,7 +52,7 @@ public class TodoController {
 	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
 	public String getAddTodo(TodoForm todoForm, Model model) {
-		List<User> assigneeList = userService.getUsersFullNameList();
+		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		model.addAttribute(todoForm);
 		return "addTodo";
@@ -71,7 +71,7 @@ public class TodoController {
 	/** 指定されたTodoのIDを元にデータベースから1件取得する */
 	@GetMapping("/updateTodo")
 	public String getUpdateTodo(@RequestParam("id") Integer id, Model model) {
-		List<User> assigneeList = userService.getUsersFullNameList();
+		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
@@ -87,7 +87,7 @@ public class TodoController {
 	public String postUpdateTodo(@Valid TodoForm todoForm, BindingResult bindingResult,
 			Model model) {
 		if (bindingResult.hasErrors()) {
-			List<User> assigneeList = userService.getUsersFullNameList();
+			List<MUser> assigneeList = userService.getUsersFullNameList();
 			model.addAttribute("assigneeList", assigneeList);
 			return "updateTodo";
 		}

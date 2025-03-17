@@ -3,15 +3,16 @@ package spring.todolist.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.security.core.userdetails.User;
+
+import spring.todolist.domain.user.model.MUser;
 
 @Mapper
 public interface UserMapper {
 
 	/** 姓名リスト取得 */
-	public List<User> getUsersFullNameList();
+	public List<MUser> getUsersFullNameList();
 
 	/** ログインユーザー情報取得　*/
-	public User findLoginUser(String username);
-	
+	public MUser findLoginUser(String username);
+
 }
