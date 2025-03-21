@@ -1,21 +1,20 @@
 package spring.todolist.advice;
 
-import org.springframework.ui.Model;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
-import jakarta.servlet.http.HttpSession;
-import spring.todolist.domain.user.model.MUser;
+import spring.todolist.domain.user.model.CustomUserDetails;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
 
-	/** ログインユーザー情報をセッションに保存 */
-	@ModelAttribute
-	public void addUserToModel(HttpSession session, Model model) {
-		MUser loginUser = (MUser) session.getAttribute("loginUser");
-		if (loginUser != null) {
-			model.addAttribute("loginUser", loginUser);
+	/** ログインユーザー情報を保存 */
+	@ModelAttribute("loginUser")
+	public CustomUserDetails loginUser(Authentication authentication) {
+		if (authentication != null && authentication.getPrincipal() instanceof CustomUserDetails) {
+			return (CustomUserDetails) authentication.getPrincipal();
 		}
+		return null;
 	}
 }

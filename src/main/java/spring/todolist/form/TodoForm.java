@@ -2,6 +2,7 @@ package spring.todolist.form;
 
 import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotBlank;
@@ -21,7 +22,8 @@ public class TodoForm {
 	private String firstName;
 
 	@NotBlank
-	private String itemName;
+	@Length(max = 100)
+	private String itemName; 
 
 	private LocalDate registrationDate;
 

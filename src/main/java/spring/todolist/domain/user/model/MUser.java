@@ -1,15 +1,9 @@
 package spring.todolist.domain.user.model;
 
-import java.util.Collection;
-import java.util.List;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import lombok.Data;
 
 @Data
-public class MUser implements UserDetails {
+public class MUser {
 
 	private int id;
 
@@ -20,9 +14,4 @@ public class MUser implements UserDetails {
 	private String familyName;
 
 	private String firstName;
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of();
-	}
 }

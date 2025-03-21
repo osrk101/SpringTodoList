@@ -22,11 +22,13 @@ public interface TodoMapper {
 	Todo getTodoOne(Integer todoId);
 
 	/** Todo更新 */
-	void updateTodo(Todo todo);
+	int updateTodo(Todo todo);
 
-	/** Todo削除 */
-	void deleteTodo(Integer todoId);
+	/** Todo削除 
+	 * @return */
+	int deleteTodo(Integer todoId);
 
-	/** Todo完了処理 */
-	void finishedTodo(Todo todo);
+	/** Todo完了処理 
+	 * @return */
+	int finishedTodo(Todo todo);
 }
