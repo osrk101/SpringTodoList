@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import spring.todolist.domain.user.model.MUser;
@@ -36,7 +37,7 @@ public class TodoController {
 	/** TodoListを全取得してviewTodoListへ送る */
 	/** 検索ワードが入力されていれば検索してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
-	public String getTodoList(String searchWords, Model model) {
+	public String getTodoList(HttpServletRequest request, String searchWords, Model model) {
 		log.info("Todoリスト一覧を表示します。検索ワード={}", searchWords);
 		List<Todo> todoList = null;
 		if (searchWords == null) {
@@ -47,26 +48,32 @@ public class TodoController {
 			todoList = todoService.getSearchTodo(searchWords);
 		}
 		model.addAttribute("todoList", todoList);
+		model.addAttribute("searchWords", searchWords);
+		String uri = request.getRequestURI();
+		model.addAttribute("currentPath", uri);
 		return "viewTodoList";
 	}
 
 	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
-	public String getAddTodo(TodoForm todoForm, Model model) {
+	public String getAddTodo(HttpServletRequest request, TodoForm todoForm, Model model) {
 		log.info("Todo追加画面を表示します。");
 		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
 		model.addAttribute(todoForm);
+		String uri = request.getRequestURI();
+		model.addAttribute("currentPath", uri);
 		return "addTodo";
 	}
 
 	/** 入力されたTodoのバリデーションチェックをしてデータベースに追加、その後リスト画面へ戻る */
 	@PostMapping("/addTodo")
-	public String postAddTodo(@Valid TodoForm todoForm, BindingResult bindingResult, Model model) {
+	public String postAddTodo(@Valid TodoForm todoForm, BindingResult bindingResult, HttpServletRequest request,
+			Model model) {
 		log.info("Todo追加作業の開始します。入力内容={}", todoForm);
 		if (bindingResult.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
-			return getAddTodo(todoForm, model);
+			return getAddTodo(request, todoForm, model);
 		}
 		todoService.addTodo(todoForm);
 		log.info("新規Todoを追加しました。");

@@ -1,59 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:th="http://thymeleaf.org">
+<html
+	xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/commonLayout">
 
 <head>
-<meta charset="UTF-8">
-<meta
-	name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- CSS読込 -->
-<link
-	rel="stylesheet"
-	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
-<!-- JS読込 -->
-<script
-	th:src="@{/webjars/jquery/jquery.min.js}"
-	defer></script>
-<script
-	th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"
-	defer></script>
 <title>削除確認</title>
 </head>
-<!-- ナビゲーションバー -->
-<nav class="navbar navbar-expand-md navbar-dark bg-primary">
-	<span class="navbar-brand">TODOリスト</span>
-	<button
-		class="navbar-toggler"
-		type="button"
-		data-toggle="collapse"
-		data-target="#navbarNav"
-		aria-controls="navbarNav"
-		aria-expanded="false"
-		aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div
-		class="collapse navbar-collapse"
-		id="navbarNav">
-		<ul class="navbar-nav mr-auto">
-			<li class="nav-item"><a
-				class="nav-link"
-				href="/viewTodoList">作業一覧</a></li>
-			<li class="nav-item"><a
-				class="nav-link"
-				href="/addTodo">作業登録</a></li>
-		</ul>
-		<span
-			class="navbar-text text-light"
-			th:text="|ようこそ、${loginUser.familyName} ${loginUser.firstName}さん|"> </span>
-		<form
-			action="logout"
-			method="get"
-			class="form-inline ml-2">
-			<button class="btn btn-outline-light">ログアウト</button>
-		</form>
-	</div>
-</nav>
+
 <!-- コンテンツエリア -->
 <body>
 	<div class="container mt-4">
