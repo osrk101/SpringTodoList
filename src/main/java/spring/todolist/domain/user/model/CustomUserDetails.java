@@ -55,4 +55,9 @@ public class CustomUserDetails implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+
+	public Object getUser() {
+		// TODO 自動生成されたメソッド・スタブ
+		return null;
+	}
 }

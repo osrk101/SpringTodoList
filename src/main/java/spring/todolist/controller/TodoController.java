@@ -5,16 +5,19 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import spring.todolist.domain.user.model.CustomUserDetails;
 import spring.todolist.domain.user.model.MUser;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
@@ -34,10 +37,28 @@ public class TodoController {
 	@Autowired
 	ModelMapper modelMapper;
 
+	/* ログインユーザー情報をセット（姓名表示用） */
+	@ModelAttribute("loginUser")
+	public CustomUserDetails setLoginUser(@AuthenticationPrincipal CustomUserDetails customUserDetails) {
+		return customUserDetails;
+	}
+
+	/* 表示するページのリクエストパスを取得*/
+	@ModelAttribute("currentPath")
+	public String setCurrentPath(HttpServletRequest request) {
+		return request.getRequestURI();
+	}
+
+	/* TodoFormをモデルにセット*/
+	@ModelAttribute("todoForm")
+	public TodoForm setupTodoForm() {
+	    return new TodoForm();
+	}
+	
 	/** TodoListを全取得してviewTodoListへ送る */
 	/** 検索ワードが入力されていれば検索してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
-	public String getTodoList(HttpServletRequest request, String searchWords, Model model) {
+	public String getTodoList(String searchWords, Model model) {
 		log.info("Todoリスト一覧を表示します。検索ワード={}", searchWords);
 		List<Todo> todoList = null;
 		if (searchWords == null) {
@@ -49,33 +70,28 @@ public class TodoController {
 		}
 		model.addAttribute("todoList", todoList);
 		model.addAttribute("searchWords", searchWords);
-		String uri = request.getRequestURI();
-		model.addAttribute("currentPath", uri);
 		return "viewTodoList";
 	}
 
 	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
-	public String getAddTodo(HttpServletRequest request, TodoForm todoForm, Model model) {
+	public String getAddTodo(Model model) {
 		log.info("Todo追加画面を表示します。");
 		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
-		model.addAttribute(todoForm);
-		String uri = request.getRequestURI();
-		model.addAttribute("currentPath", uri);
 		return "addTodo";
 	}
 
 	/** 入力されたTodoのバリデーションチェックをしてデータベースに追加、その後リスト画面へ戻る */
 	@PostMapping("/addTodo")
-	public String postAddTodo(@Valid TodoForm todoForm, BindingResult bindingResult, HttpServletRequest request,
-			Model model) {
+	public String postAddTodo(@Validated TodoForm todoForm, BindingResult bindingResult, Model model) {
 		log.info("Todo追加作業の開始します。入力内容={}", todoForm);
 		if (bindingResult.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
-			return getAddTodo(request, todoForm, model);
+			return getAddTodo(model);
 		}
-		todoService.addTodo(todoForm);
+		Todo todo = modelMapper.map(todoForm, Todo.class);
+		todoService.addTodo(todo);
 		log.info("新規Todoを追加しました。");
 		return "redirect:/viewTodoList";
 	}
@@ -97,8 +113,7 @@ public class TodoController {
 
 	/** Todoの編集をする　完了チェックもここで行う */
 	@PostMapping("/updateTodo")
-	public String postUpdateTodo(@Valid TodoForm todoForm, BindingResult bindingResult,
-			Model model) {
+	public String postUpdateTodo(@Validated TodoForm todoForm, BindingResult bindingResult, Model model) {
 		log.info("Todo更新作業を開始します。更新対象ID={} 入力内容={}", todoForm.getId(), todoForm);
 		if (bindingResult.hasErrors()) {
 			log.warn("Todo更新時のバリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
@@ -113,7 +128,8 @@ public class TodoController {
 			todoForm.setFinishedDate(null);
 			log.debug("Todoの完了日をクリアしました。");
 		}
-		todoService.updateTodo(todoForm);
+		Todo todo = modelMapper.map(todoForm, Todo.class);
+		todoService.updateTodo(todo);
 		log.info("Todoを更新しました。ID={}", todoForm.getId());
 		return "redirect:/viewTodoList";
 	}
@@ -139,7 +155,8 @@ public class TodoController {
 	public String todoFinished(TodoForm todoForm) {
 		log.info("Todo完了作業を開始します。");
 		todoForm.setFinishedDate(LocalDate.now());
-		todoService.setFinishedDate(todoForm);
+		Todo todo = modelMapper.map(todoForm, Todo.class);
+		todoService.setFinishedDate(todo);
 		return "redirect:/viewTodoList";
 	}
 }

@@ -3,7 +3,6 @@ package spring.todolist.domain.user.service;
 import java.util.List;
 
 import spring.todolist.domain.user.model.Todo;
-import spring.todolist.form.TodoForm;
 
 public interface TodoService {
 
@@ -14,20 +13,17 @@ public interface TodoService {
 	public List<Todo> getSearchTodo(String searchWords);
 
 	/** Todo登録 */
-	public void addTodo(TodoForm todoForm);
+	public void addTodo(Todo todo);
 
 	/** Todo1件取得 */
 	public Todo getTodoOne(int todoId);
 
 	/** Todo更新 */
-	public void updateTodo(TodoForm todoForm);
-
-	/** Todo削除確認 */
-	public void confirmDelete(TodoForm todoForm);
+	public void updateTodo(Todo todo);
 
 	/** Todo削除 */
 	public void deleteTodo(int todoId);
 
 	/** Todo完了処理　*/
-	public void setFinishedDate(TodoForm todoForm);
+	public void setFinishedDate(Todo todo);
 }

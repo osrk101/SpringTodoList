@@ -75,8 +75,8 @@ public class SecurityConfig {
 				.headers(headers -> headers
 						.frameOptions(FrameOptionsConfig::disable));
 
-		// CSRF 対策を無効に設定 (一時的)
-		http.csrf(csrf -> csrf.disable());
+		/* CSRF 対策を無効に設定 (一時的) 
+		http.csrf(csrf -> csrf.disable());*/
 
 		return http.build();
 	}

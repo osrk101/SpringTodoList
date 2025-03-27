@@ -16,7 +16,7 @@
 				<div class="col-sm-12">
 
 					<form
-						action="/addTodo"
+						th:action="@{/addTodo}"
 						method="post"
 						th:object="${todoForm}">
 						<!-- 項目名 -->

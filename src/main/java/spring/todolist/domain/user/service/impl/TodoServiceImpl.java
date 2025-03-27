@@ -2,7 +2,6 @@ package spring.todolist.domain.user.service.impl;
 
 import java.util.List;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
-import spring.todolist.form.TodoForm;
 import spring.todolist.repository.TodoMapper;
 
 @Service
@@ -20,9 +18,6 @@ public class TodoServiceImpl implements TodoService {
 
 	@Autowired
 	private TodoMapper todoMapper;
-
-	@Autowired
-	private ModelMapper modelMapper;
 
 	/** Todoリスト全取得 */
 	@Override
@@ -44,14 +39,13 @@ public class TodoServiceImpl implements TodoService {
 
 	/** Todo登録 */
 	@Override
-	public void addTodo(TodoForm todoForm) {
-		log.info("新規Todoを追加します。", todoForm);
-		Todo todo = modelMapper.map(todoForm, Todo.class);
+	public void addTodo(Todo todo) {
+		log.info("新規Todoを追加します。", todo);
 		try {
 			todoMapper.addTodo(todo);
 			log.info("Todoの追加に成功しました。");
 		} catch (Exception e) {
-			log.error("Todoの追加に失敗しました。内容：{}", todoForm, e);
+			log.error("Todoの追加に失敗しました。内容：{}", todo, e);
 			throw e;
 		}
 	}
@@ -65,21 +59,14 @@ public class TodoServiceImpl implements TodoService {
 
 	/** Todo更新 */
 	@Override
-	public void updateTodo(TodoForm todoForm) {
-		log.info("Todo(ID={})を更新します。", todoForm.getId(), todoForm);
-		Todo todo = modelMapper.map(todoForm, Todo.class);
+	public void updateTodo(Todo todo) {
+		log.info("Todo(ID={})を更新します。", todo.getId(), todo);
 		int updateCount = todoMapper.updateTodo(todo);
 		if (updateCount == 1) {
 			log.info("Todo更新に成功しました。");
 		} else {
 			log.warn("Todo更新に失敗しました。");
 		}
-	}
-
-	/** Todo削除確認 */
-	@Override
-	public void confirmDelete(TodoForm todoForm) {
-		log.info("Todo(ID={})の削除確認をします。内容：{}", todoForm.getId(), todoForm);
 	}
 
 	/** Todo削除 */
@@ -97,8 +84,7 @@ public class TodoServiceImpl implements TodoService {
 	/** Todo完了　*/
 	@Transactional
 	@Override
-	public void setFinishedDate(TodoForm todoForm) {
-		Todo todo = modelMapper.map(todoForm, Todo.class);
+	public void setFinishedDate(Todo todo) {
 		int finishedCount = todoMapper.finishedTodo(todo);
 		if (finishedCount == 1) {
 			log.info("Todo完了作業に成功しました。");
