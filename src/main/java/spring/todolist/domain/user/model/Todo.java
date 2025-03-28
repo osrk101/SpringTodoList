@@ -14,10 +14,6 @@ public class Todo {
 
 	private int userId;
 
-	private String familyName;
-
-	private String firstName;
-
 	private String itemName;
 
 	@NotNull
@@ -36,7 +32,7 @@ public class Todo {
 
 	private LocalDate finishedDate;
 
-	private String stringFinished;
-
 	private boolean isDeteled;
+	
+	private MUser assignee;
 }

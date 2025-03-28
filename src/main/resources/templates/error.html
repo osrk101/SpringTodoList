@@ -2,8 +2,8 @@
 <html
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorate="layout/commonLayout">
->
+	layout:decorate="layout/simpleLayout">
+
 
 <head>
 <title>エラー</title>
@@ -16,12 +16,13 @@
 			<p th:text="${message}"></p>
 			<p>エラーが発生しました</p>
 			<form
-				th:action="{@logout}"
-				method="post"
-				class="form-inline">
+				th:action="@{/logout}"
+				method="post">
 				<button class="btn btn-warning btn-sm">ログアウト</button>
 			</form>
 		</div>
+	</div>
+
 </body>
 
 </html>

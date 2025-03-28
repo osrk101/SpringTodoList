@@ -13,12 +13,20 @@
 	<!-- ログインユーザー情報取得 -->
 	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.MUser">
 		select
-		user AS username, pass AS password, family_name, first_name  
+		user AS username, pass AS password, family_name, first_name
 		from
 		users
 		where
 		user = #{username}
 	</select>
+
+	<!-- userIdからFullNameを取得（1件） -->
+	<select id="getUserFullNameById" resultType="spring.todolist.domain.user.model.MUser">
+	select family_
+	
+	
+	</select> 
+
 
 </mapper>
   

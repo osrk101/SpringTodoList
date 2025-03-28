@@ -52,9 +52,20 @@ public class TodoController {
 	/* TodoFormをモデルにセット*/
 	@ModelAttribute("todoForm")
 	public TodoForm setupTodoForm() {
-	    return new TodoForm();
+		return new TodoForm();
 	}
-	
+
+	/* 完了日を設定する　もしくはクリアする */
+	public void finishedControl(TodoForm todoForm) {
+		if (todoForm.isFinished() && todoForm.getFinishedDate() == null) {
+			todoForm.setFinishedDate(LocalDate.now());
+			log.debug("Todoが完了しました。完了日を設定={}", todoForm.getFinishedDate());
+		} else if (!todoForm.isFinished()) {
+			todoForm.setFinishedDate(null);
+			log.debug("Todoの完了日をクリアしました。");
+		}
+	}
+
 	/** TodoListを全取得してviewTodoListへ送る */
 	/** 検索ワードが入力されていれば検索してviewTodoListへ送る */
 	@GetMapping("/viewTodoList")
@@ -88,8 +99,9 @@ public class TodoController {
 		log.info("Todo追加作業の開始します。入力内容={}", todoForm);
 		if (bindingResult.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
-			return getAddTodo(model);
+			return "addTodo";
 		}
+		finishedControl(todoForm);
 		Todo todo = modelMapper.map(todoForm, Todo.class);
 		todoService.addTodo(todo);
 		log.info("新規Todoを追加しました。");
@@ -105,29 +117,20 @@ public class TodoController {
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
 		if (todoForm.getFinishedDate() != null) {
-			todoForm.setStringFinished("1");
+			todoForm.isFinished();
 		}
 		model.addAttribute("todoForm", todoForm);
 		return "updateTodo";
 	}
 
-	/** Todoの編集をする　完了チェックもここで行う */
+	/** Todoの更新をする*/
 	@PostMapping("/updateTodo")
-	public String postUpdateTodo(@Validated TodoForm todoForm, BindingResult bindingResult, Model model) {
+	public String postUpdateTodo(@Validated TodoForm todoForm, BindingResult bindingResult) {
 		log.info("Todo更新作業を開始します。更新対象ID={} 入力内容={}", todoForm.getId(), todoForm);
 		if (bindingResult.hasErrors()) {
-			log.warn("Todo更新時のバリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
-			List<MUser> assigneeList = userService.getUsersFullNameList();
-			model.addAttribute("assigneeList", assigneeList);
 			return "updateTodo";
 		}
-		if ("1".equals(todoForm.getStringFinished()) && todoForm.getFinishedDate() == null) {
-			todoForm.setFinishedDate(LocalDate.now());
-			log.debug("Todoが完了しました。完了日を設定={}", todoForm.getFinishedDate());
-		} else if (!"1".equals(todoForm.getStringFinished())) {
-			todoForm.setFinishedDate(null);
-			log.debug("Todoの完了日をクリアしました。");
-		}
+		finishedControl(todoForm);
 		Todo todo = modelMapper.map(todoForm, Todo.class);
 		todoService.updateTodo(todo);
 		log.info("Todoを更新しました。ID={}", todoForm.getId());
@@ -144,8 +147,8 @@ public class TodoController {
 	}
 
 	/** Todoの削除 */
-	@GetMapping("/deleteTodo")
-	public String getDeleteTodo(@RequestParam Integer id) {
+	@PostMapping("/deleteTodo")
+	public String postDeleteTodo(@RequestParam Integer id) {
 		log.info("Todo削除作業を開始します。");
 		todoService.deleteTodo(id);
 		return "redirect:/viewTodoList";

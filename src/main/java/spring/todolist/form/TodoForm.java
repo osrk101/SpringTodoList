@@ -17,10 +17,6 @@ public class TodoForm {
 	@NotNull
 	private Integer userId;
 
-	private String familyName;
-
-	private String firstName;
-
 	@NotBlank
 	@Length(max = 100)
 	private String itemName; 
@@ -35,7 +31,7 @@ public class TodoForm {
 
 	private LocalDate finishedDate;
 
-	public String stringFinished;
+	public boolean isFinished;
 
 	private boolean isDeteled;
 

@@ -15,4 +15,7 @@ public interface UserMapper {
 	/** ログインユーザー情報取得　*/
 	public MUser findLoginUser(String username);
 
+	/** idから姓名を取得（１件） */
+	public MUser getUserFullNameById();
+
 }
