@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
+import spring.todolist.domain.user.model.MUser;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
 import spring.todolist.repository.TodoMapper;
+import spring.todolist.repository.UserMapper;
 
 @Service
 @Slf4j
@@ -18,12 +20,20 @@ public class TodoServiceImpl implements TodoService {
 
 	@Autowired
 	private TodoMapper todoMapper;
+	
+	@Autowired
+	private UserMapper userMapper;
 
 	/** Todoリスト全取得 */
 	@Override
 	public List<Todo> getAllTodo() {
 		log.info("全てのTodoを取得します。");
 		List<Todo> todoList = todoMapper.getAllTodo();
+		for(Todo todo : todoList) {
+      MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
+      todo.setAssignee(assignee);
+      log.debug("セットされた担当者:{}", todo.getAssignee());
+		}
 		log.info("取得したTodoの件数: {}", todoList.size());
 		return todoList;
 	}

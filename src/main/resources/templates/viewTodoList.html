@@ -55,7 +55,7 @@
 							th:classappend="${todo.isExpired ? 'table-danger' : ''}"
 							th:each="todo:${todoList}">
 							<td th:text="${todo.itemName}"></td>
-							<td th:text="|${todo.familyName} ${todo.firstName}|"></td>
+							<td th:text="|${todo.assignee.familyName} ${todo.assignee.firstName}|"></td>
 							<td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
 							<td
 								th:if="${todo.expireDate != null}"

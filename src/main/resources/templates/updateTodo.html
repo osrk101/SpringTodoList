@@ -75,11 +75,10 @@
 							<input
 								type="checkbox"
 								class="form-check-input"
-								id="stringFinished"
-								th:field="*{stringFinished}"
-								th:value="1"
-								th:attr="checked=*{stringFinished} ? 'checked' : null">
-							<label for="stringFinished">完了</label>
+								id="isFinished"
+								th:field="*{isFinished}"
+								th:attr="checked=*{isFinished} ? 'checked' : false">
+							<label for="isFinished">完了</label>
 						</div>
 
 						<!-- ボタン -->

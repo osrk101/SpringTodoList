@@ -7,25 +7,28 @@
 
 	<!-- 姓名リスト取得 -->
 	<select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.MUser">
+	<![CDATA[
 		SELECT id , family_name , first_name FROM users;
+		]]>
 	</select>
 
 	<!-- ログインユーザー情報取得 -->
 	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.MUser">
-		select
-		user AS username, pass AS password, family_name, first_name
-		from
-		users
-		where
-		user = #{username}
+	<![CDATA[
+		SELECT user AS username, pass AS password, family_name, first_name
+		FROM users
+		WHERE user = #{username}
+		]]>
 	</select>
 
 	<!-- userIdからFullNameを取得（1件） -->
 	<select id="getUserFullNameById" resultType="spring.todolist.domain.user.model.MUser">
-	select family_
-	
-	
-	</select> 
+	<![CDATA[
+	SELECT family_name, first_name
+	FROM users
+	WHERE id = #{userId}
+	]]>
+	</select>
 
 
 </mapper>

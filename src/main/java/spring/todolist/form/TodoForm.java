@@ -9,6 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+
 @Data
 public class TodoForm {
 
@@ -27,12 +28,8 @@ public class TodoForm {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expireDate;
 
-	private boolean isExpired;
-
 	private LocalDate finishedDate;
 
 	public boolean isFinished;
-
-	private boolean isDeteled;
 
 }

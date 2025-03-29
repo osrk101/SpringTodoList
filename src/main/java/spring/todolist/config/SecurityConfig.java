@@ -65,13 +65,13 @@ public class SecurityConfig {
 				.defaultSuccessUrl("/viewTodoList", true)
 				.permitAll())
 
+				.userDetailsService(userDetailsService)
+
 				//ログアウト処理
 				.logout(logout -> logout
 						.logoutUrl("/logout")
 						.logoutSuccessUrl("/index"))
-				
-				.userDetailsService(userDetailsService)
-				
+
 				.headers(headers -> headers
 						.frameOptions(FrameOptionsConfig::disable));
 

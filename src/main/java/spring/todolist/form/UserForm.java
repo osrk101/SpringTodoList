@@ -13,8 +13,4 @@ public class UserForm {
 
 	@NotBlank
 	private String pass;
-
-	private String familyName;
-
-	private String firstName;
 }

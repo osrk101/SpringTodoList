@@ -49,12 +49,6 @@ public class TodoController {
 		return request.getRequestURI();
 	}
 
-	/* TodoFormをモデルにセット*/
-	@ModelAttribute("todoForm")
-	public TodoForm setupTodoForm() {
-		return new TodoForm();
-	}
-
 	/* 完了日を設定する　もしくはクリアする */
 	public void finishedControl(TodoForm todoForm) {
 		if (todoForm.isFinished() && todoForm.getFinishedDate() == null) {
@@ -95,7 +89,7 @@ public class TodoController {
 
 	/** 入力されたTodoのバリデーションチェックをしてデータベースに追加、その後リスト画面へ戻る */
 	@PostMapping("/addTodo")
-	public String postAddTodo(@Validated TodoForm todoForm, BindingResult bindingResult, Model model) {
+	public String postAddTodo(@Validated TodoForm todoForm, BindingResult bindingResult) {
 		log.info("Todo追加作業の開始します。入力内容={}", todoForm);
 		if (bindingResult.hasErrors()) {
 			log.warn("バリデーションエラーが発生しました。：{}", bindingResult.getAllErrors());
@@ -112,14 +106,14 @@ public class TodoController {
 	@GetMapping("/updateTodo")
 	public String getUpdateTodo(@RequestParam("id") Integer id, Model model) {
 		log.info("Todo更新画面を表示します");
-		List<MUser> assigneeList = userService.getUsersFullNameList();
-		model.addAttribute("assigneeList", assigneeList);
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
 		if (todoForm.getFinishedDate() != null) {
 			todoForm.isFinished();
 		}
 		model.addAttribute("todoForm", todoForm);
+		List<MUser> assigneeList = userService.getUsersFullNameList();
+		model.addAttribute("assigneeList", assigneeList);
 		return "updateTodo";
 	}
 
@@ -139,10 +133,9 @@ public class TodoController {
 
 	/** 選択したTodoの削除確認 */
 	@GetMapping("/confirmDelete")
-	public String getConfirmDelete(@RequestParam("id") Integer id, Model model) {
+	public String getConfirmDelete(@RequestParam("id") @ModelAttribute Todo todo, Integer id) {
 		log.info("Todo削除確認画面を表示します。");
-		Todo todo = todoService.getTodoOne(id);
-		model.addAttribute("todo", todo);
+		todo = todoService.getTodoOne(id);
 		return "confirmDelete";
 	}
 
