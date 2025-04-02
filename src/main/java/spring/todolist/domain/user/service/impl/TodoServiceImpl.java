@@ -20,7 +20,7 @@ public class TodoServiceImpl implements TodoService {
 
 	@Autowired
 	private TodoMapper todoMapper;
-	
+
 	@Autowired
 	private UserMapper userMapper;
 
@@ -29,10 +29,10 @@ public class TodoServiceImpl implements TodoService {
 	public List<Todo> getAllTodo() {
 		log.info("全てのTodoを取得します。");
 		List<Todo> todoList = todoMapper.getAllTodo();
-		for(Todo todo : todoList) {
-      MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
-      todo.setAssignee(assignee);
-      log.debug("セットされた担当者:{}", todo.getAssignee());
+		for (Todo todo : todoList) {
+			MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
+			todo.setAssignee(assignee);
+			log.debug("セットされた担当者:{}", todo.getAssignee());
 		}
 		log.info("取得したTodoの件数: {}", todoList.size());
 		return todoList;
@@ -43,6 +43,11 @@ public class TodoServiceImpl implements TodoService {
 	public List<Todo> getSearchTodo(String searchWords) {
 		log.info("検索ワード '{}' でTodoを検索します。", searchWords);
 		List<Todo> todoList = todoMapper.getSearchTodo(searchWords);
+		for (Todo todo : todoList) {
+			MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
+			todo.setAssignee(assignee);
+			log.debug("セットされた担当者:{}", todo.getAssignee());
+		}
 		log.info("検索結果の件数: {}", todoList.size());
 		return todoList;
 	}

@@ -30,6 +30,6 @@ public class TodoForm {
 
 	private LocalDate finishedDate;
 
-	public boolean isFinished;
+	public boolean finished;
 
 }

@@ -30,4 +30,11 @@ public class UserServiceImpl implements UserService {
 		log.info("ユーザー姓名リストを取得します。");
 		return mapper.getUsersFullNameList();
 	}
+	
+	@Override
+	/** 姓名取得(1件) */
+	public MUser getUserFullNameOne(int userId) {
+		log.info("ユーザーの姓名を1件取得します。");
+		return mapper.getUserFullNameById(userId);
+	}
 }

@@ -80,7 +80,7 @@ public class TodoController {
 
 	/** Todo追加ページへ担当者リストを取得して表示させる */
 	@GetMapping("/addTodo")
-	public String getAddTodo(Model model) {
+	public String getAddTodo(@ModelAttribute TodoForm todoForm, Model model) {
 		log.info("Todo追加画面を表示します。");
 		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
@@ -109,11 +109,11 @@ public class TodoController {
 		Todo todo = todoService.getTodoOne(id);
 		TodoForm todoForm = modelMapper.map(todo, TodoForm.class);
 		if (todoForm.getFinishedDate() != null) {
-			todoForm.isFinished();
+			todoForm.setFinished(true);
 		}
-		model.addAttribute("todoForm", todoForm);
 		List<MUser> assigneeList = userService.getUsersFullNameList();
 		model.addAttribute("assigneeList", assigneeList);
+		model.addAttribute("todoForm", todoForm);
 		return "updateTodo";
 	}
 
@@ -133,9 +133,12 @@ public class TodoController {
 
 	/** 選択したTodoの削除確認 */
 	@GetMapping("/confirmDelete")
-	public String getConfirmDelete(@RequestParam("id") @ModelAttribute Todo todo, Integer id) {
+	public String getConfirmDelete(@RequestParam("id") Integer id, Model model) {
 		log.info("Todo削除確認画面を表示します。");
-		todo = todoService.getTodoOne(id);
+		Todo todo = todoService.getTodoOne(id);
+		MUser assignee = userService.getUserFullNameOne(todo.getUserId());
+		model.addAttribute("todo", todo);
+		model.addAttribute("assignee", assignee);
 		return "confirmDelete";
 	}
 

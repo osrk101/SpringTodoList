@@ -14,4 +14,6 @@ public interface UserService {
 	/** 姓名リスト取得 */
 	public List<MUser> getUsersFullNameList();
 
+	/** 姓名取得(1件) */
+	public MUser getUserFullNameOne(int userId);
 }

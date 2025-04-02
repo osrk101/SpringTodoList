@@ -31,7 +31,7 @@
 						</tr>
 						<tr>
 							<th class="bg-primary text-white">担当者</th>
-							<td th:text="|${todo.familyName} ${todo.firstName}|"></td>
+							<td th:text="|${assignee.familyName} ${assignee.firstName}|"></td>
 						</tr>
 						<tr>
 							<th class="bg-primary text-white">期限</th>
@@ -49,7 +49,7 @@
 			<div class="text-center mt-4">
 				<form
 					th:action="@{/deleteTodo}"
-					method="get">
+					method="post">
 					<input
 						type="hidden"
 						name="id"
