@@ -1,28 +1,35 @@
 package spring.todolist.form;
 
-import java.util.Date;
+import java.time.LocalDate;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+
 
 @Data
 public class TodoForm {
 
 	private Integer id;
-	
+
+	@NotNull
 	private Integer userId;
-	
-	private String familyName;
-	
-	private String firstName;
-	
-	private String itemName;
-	
-	private Date registrationDate;
-	
-	private Date expireDate;
 
-	private boolean isExpired;
+	@NotBlank
+	@Length(max = 100)
+	private String itemName; 
 
-	private Date finishedDate;
+	private LocalDate registrationDate;
+
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private LocalDate expireDate;
+
+	private LocalDate finishedDate;
+
+	public boolean isFinished;
 
 }

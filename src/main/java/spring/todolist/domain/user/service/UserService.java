@@ -2,14 +2,16 @@ package spring.todolist.domain.user.service;
 
 import java.util.List;
 
-import spring.todolist.domain.user.model.User;
-import spring.todolist.form.UserForm;
+import spring.todolist.domain.user.model.MUser;
+
+
 
 public interface UserService {
-	/** ログイン確認 */
-	public User verifyLogin(UserForm userForm);
+	
+	/** ログインユーザー情報取得　*/
+	public MUser getLoginUser(String username);
 
 	/** 姓名リスト取得 */
-	public List<User> getUsersFullNameList();
+	public List<MUser> getUsersFullNameList();
 
 }

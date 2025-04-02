@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/commonLayout">
+
+<head>
+<title>削除確認</title>
+</head>
+
+<!-- コンテンツエリア -->
+<body>
+	<div layout:fragment="content">
+		<div class="container mt-4">
+			<!-- 修正メッセージ -->
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="alert alert-danger">
+						<p>下記の項目を削除します。よろしいですか？</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 作業情報テーブル -->
+			<div class="row justify-content-center">
+				<div class="col-sm-8">
+					<table class="table table-bordered">
+						<tr>
+							<th class="bg-primary text-white">項目名</th>
+							<td th:text="${todo.itemName}"></td>
+						</tr>
+						<tr>
+							<th class="bg-primary text-white">担当者</th>
+							<td th:text="|${todo.familyName} ${todo.firstName}|"></td>
+						</tr>
+						<tr>
+							<th class="bg-primary text-white">期限</th>
+							<td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
+						</tr>
+						<tr>
+							<th class="bg-primary text-white">完了</th>
+							<td th:text="${todo.finishedDate != null ? '完了' : ''}"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<!-- ボタン -->
+			<div class="text-center mt-4">
+				<form
+					th:action="@{/deleteTodo}"
+					method="get">
+					<input
+						type="hidden"
+						name="id"
+						th:value="${todo.id}">
+					<button
+						type="submit"
+						class="btn btn-danger">削除</button>
+					<button
+						type="button"
+						class="btn btn-outline-secondary"
+						onclick="location.href='/viewTodoList';">キャンセル</button>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

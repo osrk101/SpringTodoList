@@ -3,13 +3,13 @@ package spring.todolist.domain.user.model;
 import lombok.Data;
 
 @Data
-public class User {
+public class MUser {
 
 	private int id;
 
-	private String userName;
+	private String username;
 
-	private Integer pass;
+	private String password;
 
 	private String familyName;
 
