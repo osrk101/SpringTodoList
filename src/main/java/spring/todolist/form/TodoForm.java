@@ -22,13 +22,9 @@ public class TodoForm {
 	@Length(max = 100)
 	private String itemName; 
 
-	private LocalDate registrationDate;
-
 	@NotNull
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expireDate;
-
-	private LocalDate finishedDate;
 
 	public boolean finished;
 

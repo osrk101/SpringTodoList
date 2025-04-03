@@ -5,7 +5,7 @@
 	layout:decorate="layout/commonLayout">
 
 <head>
-<title>作業更新</title>
+<title>作業登録</title>
 </head>
 
 <!-- コンテンツエリア -->
@@ -14,14 +14,11 @@
 		<div class="container mt-4">
 			<div class="row">
 				<div class="col-sm-12">
+
 					<form
-						th:action="@{/updateTodo}"
+						th:action="@{/addTodo}"
 						method="post"
 						th:object="${todoForm}">
-						<!-- ID -->
-						<input
-							type="hidden"
-							th:field="*{id}">
 						<!-- 項目名 -->
 						<div class="form-group">
 							<label for="itemName">項目名</label>
@@ -41,7 +38,8 @@
 							<select
 								class="form-control"
 								th:field="*{userId}"
-								th:errorClass=" is-invalid">
+								th:errorClass="is-invalid">
+								<option value="">担当者を選択</option>
 								<option
 									th:each="user : ${assigneeList}"
 									th:value="${user.Id}"
@@ -72,15 +70,14 @@
 								type="checkbox"
 								class="form-check-input"
 								id="finished"
-								th:field="*{finished}"
-								th:attr="checked=*{finished} ? 'checked' : false">
+								th:field="*{finished}">
 							<label for="finished">完了</label>
 						</div>
 
 						<!-- ボタン -->
 						<button
 							type="submit"
-							class="btn btn-primary">作業更新</button>
+							class="btn btn-primary">作業登録</button>
 						<button
 							type="button"
 							class="btn btn-outline-secondary"

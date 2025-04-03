@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="spring.todolist.repository.UserMapper">
+
+	<!-- 姓名リスト取得 -->
+	<select id="getUsersFullNameList" resultType="spring.todolist.domain.user.model.MUser">
+	<![CDATA[
+		SELECT id , family_name , first_name FROM users;
+		]]>
+	</select>
+
+	<!-- ログインユーザー情報取得 -->
+	<select id="findLoginUser" resultType="spring.todolist.domain.user.model.MUser">
+	<![CDATA[
+		SELECT user AS username, pass AS password, family_name, first_name
+		FROM users
+		WHERE user = #{username}
+		]]>
+	</select>
+
+	<!-- userIdからFullNameを取得（1件） -->
+	<select id="getUserFullNameById" resultType="spring.todolist.domain.user.model.MUser">
+	<![CDATA[
+	SELECT family_name, first_name
+	FROM users
+	WHERE id = #{userId}
+	]]>
+	</select>
+
+
+</mapper>
+  

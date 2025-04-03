@@ -2,9 +2,6 @@ package spring.todolist.domain.user.model;
 
 import java.time.LocalDate;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
@@ -16,11 +13,8 @@ public class Todo {
 
 	private String itemName;
 
-	@NotNull
 	private LocalDate registrationDate;
 
-	@NotNull
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate expireDate;
 
 	public boolean isExpired() {
@@ -31,8 +25,12 @@ public class Todo {
 	}
 
 	private LocalDate finishedDate;
+	
+	public boolean isFinished;
 
 	private boolean isDeteled;
 	
 	private MUser assignee;
+
+	
 }
