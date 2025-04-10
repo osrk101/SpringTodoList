@@ -20,6 +20,9 @@ public interface TodoMapper {
 
 	/** Todo1件取得 */
 	Todo getTodoOne(Integer todoId);
+	
+	/** Todo1件取得(担当者名を含む) */
+	Todo getTodoOneWithAssignee(int todoId);
 
 	/** Todo更新 */
 	int updateTodo(Todo todo);
@@ -31,4 +34,6 @@ public interface TodoMapper {
 	/** Todo完了処理 
 	 * @return */
 	int finishedTodo(Todo todo);
+
+	
 }

@@ -5,7 +5,7 @@
 	layout:decorate="layout/simpleLayout">
 
 <head>
-<title>ログイン</title>
+<title th:text="#{user.login.title}"></title>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 			<!-- ログイン画面タイトル -->
 			<div class="row">
 				<div class="col text-center">
-					<h2>ログイン</h2>
+					<h2 th:text="#{user.login.title}"></h2>
 					<p
 						th:if="${session['SPRING_SECURITY_LAST_EXCEPTION'] != null}"
 						th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}"
@@ -34,7 +34,9 @@
 						class="form-input">
 						<!-- ユーザー名 -->
 						<div class="form-group">
-							<label for="username">ユーザー名</label>
+							<label
+								for="username"
+								th:text="#{username}"></label>
 							<input
 								type="text"
 								class="form-control"
@@ -44,7 +46,9 @@
 						</div>
 						<!-- パスワード -->
 						<div class="form-group">
-							<label for="password">パスワード</label>
+							<label
+								for="password"
+								th:text="#{password}"></label>
 							<input
 								type="password"
 								class="form-control"
@@ -55,7 +59,8 @@
 						<!-- ログインボタン -->
 						<button
 							type="submit"
-							class="btn btn-primary">ログイン</button>
+							class="btn btn-primary"
+							th:text="#{user.login.title}"></button>
 					</form>
 				</div>
 				<!-- 右側の余白 -->

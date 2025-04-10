@@ -5,7 +5,7 @@
 	layout:decorate="layout/commonLayout">
 
 <head>
-<title>削除確認</title>
+<title th:text="#{confirmDelete}"></title>
 </head>
 
 <!-- コンテンツエリア -->
@@ -26,19 +26,32 @@
 				<div class="col-sm-8">
 					<table class="table table-bordered">
 						<tr>
-							<th class="bg-primary text-white">項目名</th>
+							<th
+								class="bg-primary text-white"
+								th:text="#{todo.itemName}"></th>
 							<td th:text="${todo.itemName}"></td>
 						</tr>
 						<tr>
-							<th class="bg-primary text-white">担当者</th>
-							<td th:text="|${assignee.familyName} ${assignee.firstName}|"></td>
+							<th
+								class="bg-primary text-white"
+								th:text="#{todo.assignee}"></th>
+							<td th:text="|${todo.assignee.familyName} ${todo.assignee.firstName}|"></td>
 						</tr>
 						<tr>
-							<th class="bg-primary text-white">期限</th>
-							<td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
+							<th
+								class="bg-primary text-white"
+								th:text="#{todo.registrationDate}"></th>
+							<td
+								th:if="${todo.expireDate != null}"
+								th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
+							<td
+								th:if="${todo.expireDate == null}"
+								th:text="#{notSet}"></td>
 						</tr>
 						<tr>
-							<th class="bg-primary text-white">完了</th>
+							<th
+								class="bg-primary text-white"
+								th:text="#{finished}"></th>
 							<td th:text="${todo.finishedDate != null ? '完了' : ''}"></td>
 						</tr>
 					</table>
@@ -56,11 +69,13 @@
 						th:value="${todo.id}">
 					<button
 						type="submit"
-						class="btn btn-danger">削除</button>
+						class="btn btn-danger"
+						th:text="#{delete}"></button>
 					<button
 						type="button"
 						class="btn btn-outline-secondary"
-						onclick="location.href='/viewTodoList';">キャンセル</button>
+						th:text="#{cancel}"
+						onclick="location.href='/viewTodoList';"></button>
 				</form>
 			</div>
 		</div>

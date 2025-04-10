@@ -13,7 +13,9 @@
 		class="navbar navbar-expand-md navbar-dark bg-primary">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">TODOリスト</a>
+				<a
+					class="navbar-brand"
+					th:text="#{todo.page.title}"></a>
 			</div>
 		</div>
 	</nav>
@@ -24,7 +26,9 @@
 		class="navbar navbar-expand-md navbar-dark bg-primary">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand">TODOリスト</a>
+				<a
+					class="navbar-brand"
+					th:text="#{todo.page.title}"></a>
 			</div>
 
 			<ul class="navbar-nav mr-auto">
@@ -32,16 +36,19 @@
 					class="nav-item"
 					th:classappend="${currentPath != null and currentPath.startsWith('/viewTodoList')} ? 'active'"><a
 					class="nav-link"
-					th:href="@{/viewTodoList}">作業一覧</a></li>
+					th:href="@{/viewTodoList}"
+					th:text="#{todoList.view}"></a></li>
 				<li
 					class="nav-item"
 					th:classappend="${currentPath != null and currentPath.startsWith('/addTodo')} ? 'active'"><a
 					class="nav-link"
-					th:href="@{/addTodo}">作業登録</a></li>
+					th:href="@{/addTodo}"
+					th:text="#{todoList.add}"></a></li>
 			</ul>
 
 			<span
 				class="navbar-text mr-5"
+				th:if="${#authentication != null}"
 				th:text="|ようこそ、${#authentication.principal.familyName} ${#authentication.principal.firstName}さん|"></span>
 
 			<form
@@ -49,7 +56,7 @@
 				th:action="@{/logout}">
 				<button
 					class="btn btn-outline-light"
-					type="submit">ログアウト</button>
+					type="submit" th:text="#{logout}"></button>
 			</form>
 
 		</div>

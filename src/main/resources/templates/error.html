@@ -6,7 +6,7 @@
 
 
 <head>
-<title>エラー</title>
+<title th:text="#{error}"></title>
 </head>
 
 <body>
@@ -18,7 +18,7 @@
 			<form
 				th:action="@{/logout}"
 				method="post">
-				<button class="btn btn-warning btn-sm">ログアウト</button>
+				<button class="btn btn-warning btn-sm" th:text="#{logout}"></button>
 			</form>
 		</div>
 	</div>

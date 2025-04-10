@@ -5,7 +5,7 @@
 	layout:decorate="layout/commonLayout">
 
 <head>
-<title>作業更新</title>
+<title th:text="#{todoList.update}"></title>
 </head>
 
 <!-- コンテンツエリア -->
@@ -24,7 +24,9 @@
 							th:field="*{id}">
 						<!-- 項目名 -->
 						<div class="form-group">
-							<label for="itemName">項目名</label>
+							<label
+								for="itemName"
+								th:text="#{todo.itemName}"></label>
 							<input
 								type="text"
 								class="form-control"
@@ -37,7 +39,9 @@
 
 						<!-- 担当者 -->
 						<div class="form-group">
-							<label for="assignee">担当者</label>
+							<label
+								for="assignee"
+								th:text="#{todo.assignee}"></label>
 							<select
 								class="form-control"
 								th:field="*{userId}"
@@ -54,13 +58,14 @@
 
 						<!-- 期限日 -->
 						<div class="form-group">
-							<label for="expireDate">期限日</label>
+							<label
+								for="expireDate"
+								th:text="#{todo.expireDate}"></label>
 							<input
 								type="date"
-								required
 								class="form-control"
 								th:field="*{expireDate}"
-								th:errorClass="is-invalid">
+								th:errorClass="is-invalid" />
 							<div
 								class="invalid-feedback"
 								th:errors="*{expireDate}"></div>
@@ -74,17 +79,21 @@
 								id="finished"
 								th:field="*{finished}"
 								th:attr="checked=*{finished} ? 'checked' : false">
-							<label for="finished">完了</label>
+							<label
+								for="finished"
+								th:text="#{finished}"></label>
 						</div>
 
 						<!-- ボタン -->
 						<button
 							type="submit"
-							class="btn btn-primary">作業更新</button>
+							class="btn btn-primary"
+							th:text="#{todoList.update}"></button>
 						<button
 							type="button"
 							class="btn btn-outline-secondary"
-							onclick="location.href='/viewTodoList';">キャンセル</button>
+							th:text="#{cancel}"
+							onclick="location.href='/viewTodoList';"></button>
 					</form>
 				</div>
 			</div>

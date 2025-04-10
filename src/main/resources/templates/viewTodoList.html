@@ -1,117 +1,127 @@
 <!DOCTYPE html>
 <html
-    xmlns:th="http://thymeleaf.org"
-    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-    layout:decorate="layout/commonLayout">
+	xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="layout/commonLayout">
 
 <head>
-<title>作業リスト</title>
+<title th:text="#{todo.page.title}"></title>
 </head>
 
 <!-- コンテンツエリア -->
 <body>
-    <div layout:fragment="content">
-        <div class="container text-center">
-            <div class="mx-auto">
-                <h2 class="text-center mb-4">作業一覧</h2>
-                <form
-                    th:action="@{/viewTodoList}"
-                    method="get">
-                    <input
-                        type="text"
-                        name="searchWords"
-                        th:value="${searchWords}">
-                    <input
-                        type="submit"
-                        value="検索"
-                        class="btn btn-warning btn-sm" />
-                </form>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th
-                                class="col-md-auto"
-                                scope="col">項目名</th>
-                            <th
-                                class="col-md-auto"
-                                scope="col">担当者</th>
-                            <th
-                                class="col-md-auto"
-                                scope="col">登録日</th>
-                            <th
-                                class="col-md-auto"
-                                scope="col">期限日</th>
-                            <th
-                                class="col-md-auto"
-                                scope="col">完了日</th>
-                            <th
-                                class="col-md-1"
-                                scope="col">操作</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            class="table"
-                            th:classappend="${todo.isExpired ? 'table-danger' : ''}"
-                            th:each="todo:${todoList}">
-                            <td th:text="${todo.itemName}"></td>
-                            <td th:text="|${todo.assignee.familyName} ${todo.assignee.firstName}|"></td>
-                            <td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
-                            <td
-                                th:if="${todo.expireDate != null}"
-                                th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
-                            <td th:if="${todo.expireDate == null}">未設定</td>
-                            <td th:text="${#temporals.format(todo.finishedDate, 'yyyy-MM-dd')}"></td>
-                            <td>
-                                <div class="d-flex">
-                                    <form
-                                        th:action="@{/finishedTodo}"
-                                        method="get">
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            th:value="${todo.id}">
-                                        <input
-                                            type="submit"
-                                            value="完了"
-                                            class="btn btn-success btn-sm" />
-                                    </form>
-                                    <form
-                                        th:action="@{/updateTodo}"
-                                        method="get">
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            th:value="${todo.id}">
-                                        <input
-                                            type="submit"
-                                            value="更新"
-                                            class="btn btn-warning btn-sm" />
-                                    </form>
-                                    <form
-                                        th:action="@{/confirmDelete}"
-                                        method="get">
-                                        <input
-                                            type="hidden"
-                                            name="id"
-                                            th:value="${todo.id}">
-                                        <input
-                                            type="submit"
-                                            value="削除"
-                                            class="btn btn-danger btn-sm" />
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+	<div layout:fragment="content">
+		<div class="container text-center">
+			<div class="mx-auto">
+				<h2
+					class="text-center mb-4"
+					th:text="#{todoList.view}"></h2>
+				<form
+					th:action="@{/viewTodoList}"
+					method="get">
+					<input
+						type="text"
+						name="searchWords"
+						th:value="${searchWords}">
+					<input
+						type="submit"
+						value="検索"
+						class="btn btn-warning btn-sm" />
+				</form>
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th
+								class="col-md-auto"
+								scope="col"
+								th:text="#{todo.itemName}"></th>
+							<th
+								class="col-md-auto"
+								scope="col"
+								th:text="#{todo.assignee}"></th>
+							<th
+								class="col-md-auto"
+								scope="col"
+								th:text="#{todo.registrationDate}"></th>
+							<th
+								class="col-md-auto"
+								scope="col"
+								th:text="#{todo.expireDate}"></th>
+							<th
+								class="col-md-auto"
+								scope="col"
+								th:text="#{todo.finishedDate}"></th>
+							<th
+								class="col-md-1"
+								scope="col"
+								th:text="#{control}"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr
+							class="table"
+							th:classappend="${todo.isExpired ? 'table-danger' : ''}"
+							th:each="todo:${todoList}">
+							<td th:text="${todo.itemName}"></td>
+							<td th:text="|${todo.assignee.familyName} ${todo.assignee.firstName}|"></td>
+							<td th:text="${#temporals.format(todo.registrationDate, 'yyyy-MM-dd')}"></td>
+							<td
+								th:if="${todo.expireDate != null}"
+								th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
+							<td
+								th:if="${todo.expireDate == null}"
+								th:text="#{notSet}"></td>
+							<td th:text="${#temporals.format(todo.finishedDate, 'yyyy-MM-dd')}"></td>
+							<td>
+								<div class="d-flex">
+									<form
+										th:action="@{/finishedTodo}"
+										method="get">
+										<input
+											type="hidden"
+											name="id"
+											th:value="${todo.id}">
+										<input
+											type="submit"
+											value="完了"
+											class="btn btn-success btn-sm" />
+									</form>
+									<form
+										th:action="@{/updateTodo}"
+										method="get">
+										<input
+											type="hidden"
+											name="id"
+											th:value="${todo.id}">
+										<input
+											type="submit"
+											value="更新"
+											class="btn btn-warning btn-sm" />
+									</form>
+									<form
+										th:action="@{/confirmDelete}"
+										method="get">
+										<input
+											type="hidden"
+											name="id"
+											th:value="${todo.id}">
+										<input
+											type="submit"
+											value="削除"
+											class="btn btn-danger btn-sm" />
+									</form>
+								</div>
+							</td>
+						</tr>
 
 
 
 
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
 </body>
 
 </html>

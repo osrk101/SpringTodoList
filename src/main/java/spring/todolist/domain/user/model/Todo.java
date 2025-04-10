@@ -17,20 +17,24 @@ public class Todo {
 
 	private LocalDate expireDate;
 
+	private LocalDate finishedDate;
+
+	private boolean isDeteled;
+
+	private MUser assignee;
+
 	public boolean isExpired() {
 		if (finishedDate != null) {
 			return false;
 		}
-		return expireDate.isBefore(LocalDate.now());
+		return expireDate != null && expireDate.isBefore(LocalDate.now());
 	}
 
-	private LocalDate finishedDate;
-	
-	public boolean isFinished;
-
-	private boolean isDeteled;
-	
-	private MUser assignee;
-
-	
+	public boolean isFinished() {
+		if (finishedDate != null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

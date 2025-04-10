@@ -17,6 +17,9 @@ public interface TodoService {
 
 	/** Todo1件取得 */
 	public Todo getTodoOne(int todoId);
+	
+	/** Todo1件取得(担当者名を含む) */
+	public Todo getTodoOneWithAssignee(int todoId);
 
 	/** Todo更新 */
 	public void updateTodo(Todo todo);
@@ -26,4 +29,6 @@ public interface TodoService {
 
 	/** Todo完了処理　*/
 	public void setFinishedDate(Todo todo);
+
+
 }

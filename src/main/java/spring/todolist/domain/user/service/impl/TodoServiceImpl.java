@@ -7,11 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
-import spring.todolist.domain.user.model.MUser;
 import spring.todolist.domain.user.model.Todo;
 import spring.todolist.domain.user.service.TodoService;
 import spring.todolist.repository.TodoMapper;
-import spring.todolist.repository.UserMapper;
 
 @Service
 @Slf4j
@@ -21,19 +19,11 @@ public class TodoServiceImpl implements TodoService {
 	@Autowired
 	private TodoMapper todoMapper;
 
-	@Autowired
-	private UserMapper userMapper;
-
 	/** Todoリスト全取得 */
 	@Override
 	public List<Todo> getAllTodo() {
 		log.info("全てのTodoを取得します。");
 		List<Todo> todoList = todoMapper.getAllTodo();
-		for (Todo todo : todoList) {
-			MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
-			todo.setAssignee(assignee);
-			log.debug("セットされた担当者:{}", todo.getAssignee());
-		}
 		log.info("取得したTodoの件数: {}", todoList.size());
 		return todoList;
 	}
@@ -43,11 +33,6 @@ public class TodoServiceImpl implements TodoService {
 	public List<Todo> getSearchTodo(String searchWords) {
 		log.info("検索ワード '{}' でTodoを検索します。", searchWords);
 		List<Todo> todoList = todoMapper.getSearchTodo(searchWords);
-		for (Todo todo : todoList) {
-			MUser assignee = userMapper.getUserFullNameById(todo.getUserId());
-			todo.setAssignee(assignee);
-			log.debug("セットされた担当者:{}", todo.getAssignee());
-		}
 		log.info("検索結果の件数: {}", todoList.size());
 		return todoList;
 	}
@@ -70,6 +55,13 @@ public class TodoServiceImpl implements TodoService {
 	public Todo getTodoOne(int todoId) {
 		log.info("Todo(ID={})を取得します", todoId);
 		return todoMapper.getTodoOne(todoId);
+	}
+
+	/** Todo1件取得(担当者名を含む) */
+	@Override
+	public Todo getTodoOneWithAssignee(int todoId) {
+		log.info("Todo(ID={})を取得します", todoId);
+		return todoMapper.getTodoOneWithAssignee(todoId);
 	}
 
 	/** Todo更新 */
