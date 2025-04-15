@@ -40,7 +40,7 @@
 						<tr>
 							<th
 								class="bg-primary text-white"
-								th:text="#{todo.registrationDate}"></th>
+								th:text="#{todo.expireDate}"></th>
 							<td
 								th:if="${todo.expireDate != null}"
 								th:text="${#temporals.format(todo.expireDate, 'yyyy-MM-dd')}"></td>
